@@ -12,7 +12,7 @@ public class Tests
     [Test]
     public void Test1()
     {
-        Print("სს");
+        Log("სსsss");
         Assert.Pass();
     }
 }
