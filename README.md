@@ -1,7 +1,7 @@
 # aqa-fullstack
 
-This is a **fullstack QA automation framework** built in C# to demonstrate professional software testing practices.
-It covers **UI**, **API**, **DB** layers using **OOP** and **POM** for clean, scalable, and maintainable code.
+This is a **fullstack QA automation framework** (combination of projects) built in C# to demonstrate professional software testing practices.
+It covers **UI**, **API**, and **DB** testing using **OOP** and **POM** for clean, scalable, and maintainable code.
 
 **The project follows**:
 - **clean architecture principles**
