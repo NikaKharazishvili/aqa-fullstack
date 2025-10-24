@@ -1,0 +1,14 @@
+# Core .NET build artifacts
+**/bin/
+**/obj/
+
+# VS Code
+.vscode
+
+# Visual Studio
+.vs
+*.csproj.user
+*.suo
+
+# Optional: Test results (if generated)
+TestResults/
