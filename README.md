@@ -18,11 +18,13 @@ Fully portable — **clone & run**. Built in **VS Code** with **C# Dev Kit** + *
 ---
 
 ## Project Structure
-aqa-fullstack/
-├── ApiTests/        → RestSharp + Moq (reqres.in)
-├── DbTests/         → MySql.Data + Moq (db4free.net)
-├── UiTests/         → Selenium + POM (practice-automation.com)
-└── Shared/          → Utils.cs
+- aqa-fullstack/
+- ├── ApiTests/        → RestSharp + Moq (reqres.in)
+- ├── DbTests/         → MySql.Data + Moq (db4free.net)
+- ├── UiTests/         → Selenium + POM (practice-automation.com)
+- └── Shared/          → Utils.cs
+
+---
 
 ## Run Tests
 ```bash
