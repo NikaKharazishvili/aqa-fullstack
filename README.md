@@ -1,19 +1,32 @@
 # aqa-fullstack
 
-This is a **fullstack QA automation framework** (combination of projects) built in C# to demonstrate professional software testing practices.
-It covers **UI**, **API**, and **DB** testing using **OOP** and **POM** for clean, scalable, and maintainable code.
+**C# automation suite** — API, UI, DB testing with **Unit + Integration** coverage.  
+**Clean architecture**, **OOP**, **POM**, **DRY**, **cross-project reuse**, **real JSON in unit tests**.
 
-**The project follows**:
-- **clean architecture principles**
-- **folder-based namespaces**
-- **DRY code**
-- **cross-project code reuse** via a dedicated `Shared` class library containing reusable utilities
+Fully portable — **clone & run**. Built in **VS Code** with **C# Dev Kit** + **NuGet Package Manager** extensions.
 
-**Packages used**:
-- **NUnit** – test runner and assertions
-- **Selenium WebDriver** – browser automation on `something.com` (UITests)
-- **RestSharp** – fluent REST API testing on `reqres.in` (APITests)
-- **MySql.Data** – direct SQL validation on `db4free.net` (DBTests)
+---
 
-**Fully portable** — Clone and run.
-Developed in **VS Code** with **C# Dev Kit** and **NuGet Package Manager** extensions.
+## Features
+- **Unit Tests (Moq)** → Fast, offline, 100% reliable
+- **Integration Tests** → Real API, browser, DB
+- **Folder-based namespaces** → Scalable
+- **DTOs + Constants** → Type-safe, clean
+- **Shared.Utils** → Reusable methods
+- **Real JSON captured** → Unit tests mimic live API
+
+---
+
+## Project Structure
+aqa-fullstack/
+├── ApiTests/        → RestSharp + Moq (reqres.in)
+├── DbTests/         → MySql.Data + Moq (db4free.net)
+├── UiTests/         → Selenium + POM (practice-automation.com)
+└── Shared/          → Utils.cs
+
+## Run Tests
+```bash
+dotnet test                                 # All tests
+dotnet test --filter "Category=Unit"        # Unit only
+dotnet test --filter "Category=Integration" # Integration only
+```
