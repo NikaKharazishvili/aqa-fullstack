@@ -6,25 +6,29 @@ namespace ApiTests.Clients;
 
 public class UsersClient : IUsersClient
 {
-    private readonly RestClient Client;
+    private readonly RestClient client;
 
     public UsersClient()
     {
-        Client = new RestClient(Endpoints.BaseUrl);
-        Client.AddDefaultHeader(Endpoints.ApiKeyHeader, Endpoints.ApiKeyValue);
+        client = new RestClient(Endpoints.BaseUrl);
+        client.AddDefaultHeader(Endpoints.ApiKeyHeader, Endpoints.ApiKeyValue);
     }
 
-    public async Task<RestResponse> GetUsers(int page)
-    {
-        var request = new RestRequest(Endpoints.Users)
-            .AddParameter("page", page, ParameterType.QueryString);
+    // https://reqres.in/api/users?page=2
+    public async Task<RestResponse> GetUsers(int pageId) => await client.ExecuteAsync(new RestRequest(Endpoints.Users).AddQueryParameter("page", pageId));
 
-        return await Client.ExecuteAsync(request);
-    }
+    // https://reqres.in/api/users/2
+    public async Task<RestResponse> GetUser(int userId) => await client.ExecuteAsync(new RestRequest(Endpoints.SingleUser).AddUrlSegment("id", userId));
 
-    // Implement others later...
-    public Task<RestResponse> GetUser(string userId) => throw new NotImplementedException();
-    public Task<RestResponse> CreateUser(UserRequest user) => throw new NotImplementedException();
-    public Task<RestResponse> UpdateUser(string userId, UserRequest user) => throw new NotImplementedException();
-    public Task<RestResponse> DeleteUser(string userId) => throw new NotImplementedException();
+    // https://reqres.in/api/users   { "name": "morpheus", "job": "leader" }
+    public async Task<RestResponse> CreateUser(UserRequest user) => await client.ExecuteAsync(new RestRequest(Endpoints.Users, Method.Post).AddJsonBody(user));
+
+    // https://reqres.in/api/users/2   { "name": "morpheus", "job": "zion resident" }
+    public async Task<RestResponse> UpdateUser(int userId, UserRequest user) => await client.ExecuteAsync(new RestRequest(Endpoints.SingleUser, Method.Put).AddUrlSegment("id", userId).AddJsonBody(user));
+
+    // https://reqres.in/api/users/2   { "name": "morpheus", "job": "zion resident" }
+    public async Task<RestResponse> UpdateUser2(int userId, UserRequest user) => await client.ExecuteAsync(new RestRequest(Endpoints.SingleUser, Method.Patch).AddUrlSegment("id", userId).AddJsonBody(user));
+
+    // https://reqres.in/api/users/2
+    public async Task<RestResponse> DeleteUser(int userId) => await client.ExecuteAsync(new RestRequest(Endpoints.SingleUser, Method.Delete).AddUrlSegment("id", userId));
 }

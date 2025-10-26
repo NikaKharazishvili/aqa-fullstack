@@ -7,7 +7,7 @@ using Newtonsoft.Json.Linq;
 namespace ApiTests.Tests.Unit;
 
 [TestFixture]
-[Category("Unit")]  // CI/CD filter
+[Category("Unit")]
 public class UsersTests
 {
     private Mock<IUsersClient> mockClient = null!;

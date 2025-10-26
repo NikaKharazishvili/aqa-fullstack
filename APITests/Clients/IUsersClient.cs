@@ -6,8 +6,8 @@ namespace ApiTests.Clients;
 public interface IUsersClient
 {
     Task<RestResponse> GetUsers(int page);
-    Task<RestResponse> GetUser(string userId);
+    Task<RestResponse> GetUser(int userId);
     Task<RestResponse> CreateUser(UserRequest user);
-    Task<RestResponse> UpdateUser(string userId, UserRequest user);
-    Task<RestResponse> DeleteUser(string userId);
+    Task<RestResponse> UpdateUser(int userId, UserRequest user);
+    Task<RestResponse> DeleteUser(int userId);
 }

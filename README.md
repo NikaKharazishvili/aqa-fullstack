@@ -1,28 +1,28 @@
 # aqa-fullstack
 
 **C# automation suite** — API, UI, DB testing with **Unit + Integration** coverage.  
-**Clean architecture**, **OOP**, **POM**, **DRY**, **cross-project reuse**, **real JSON in unit tests**.
+**Clean architecture**, **OOP**, **POM**, **DRY**.
+**Tech Stack:** .NET 9, C# 12, NUnit, Selenium, RestSharp, Moq, MySQL.
 
-Fully portable — **clone & run**. Built in **VS Code** with **C# Dev Kit** + **NuGet Package Manager** extensions.
+Fully portable — **clone & run**. Built in **VS Code**.
 
 ---
 
 ## Features
-- **Unit Tests (Moq)** → Fast, offline, 100% reliable
+- **Unit Tests (mocked JSON)** → Fast, offline, validate parsing & business logic; uses pre-saved API responses
 - **Integration Tests** → Real API, browser, DB
 - **Folder-based namespaces** → Scalable
 - **DTOs + Constants** → Type-safe, clean
 - **Shared.Utils** → Reusable methods
-- **Real JSON captured** → Unit tests mimic live API
 
 ---
 
 ## Project Structure
 - aqa-fullstack/
-- ├── ApiTests/        → RestSharp + Moq (reqres.in)
-- ├── DbTests/         → MySql.Data + Moq (db4free.net)
-- ├── UiTests/         → Selenium + POM (practice-automation.com)
-- └── Shared/          → Utils.cs
+- ├── ApiTests/        → RestSharp + unit mocks (reqres.in)
+- ├── DbTests/         → MySql.Data (db4free.net)
+- ├── UiTests/         → Selenium (practice-automation.com)
+- └── Shared/Utils.cs
 
 ---
 
