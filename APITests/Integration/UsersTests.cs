@@ -1,30 +1,32 @@
-using ApiTests.Clients;
 using Newtonsoft.Json.Linq;
-using System.Net;  // To shortly write 'HttpStatusCode.OK'
+using ApiTests.Clients;
 using ApiTests.Models;
+using static System.Net.HttpStatusCode;
 using static Shared.Utils;
 
 namespace ApiTests.Tests.Integration;
 
 [TestFixture]
-[Category("Integration")]
+[Category(INTEGRATION)]
+[Category(API)]
+[Parallelizable(ParallelScope.All)]
 public class UsersTests
 {
-    private IUsersClient _usersClient;
+    private IUserClient _userClient;
 
     [SetUp]
-    public void Setup() => _usersClient = new UsersClient();
+    public void Setup() => _userClient = new UserClient();
 
     [Test]
     [Order(1)]
     [Description("GET /users?page=2 → returns 200 and correct page data")]
-    public async Task GetListUsers_Page2_Returns6()
+    public async Task GetListUsers_Page2_Returns6User()
     {
-        var response = await _usersClient.GetUsers(2);
+        var response = await _userClient.GetUsers(2);
 
         Assert.Multiple(() =>
         {
-            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            Assert.That(response.StatusCode, Is.EqualTo(OK));
 
             var json = JObject.Parse(response.Content!);
             Assert.That(json["page"]?.Value<int>(), Is.EqualTo(2), "Page should be 2");
@@ -47,11 +49,11 @@ public class UsersTests
     [Description("GET /users/2 → returns 200 and correct user data")]
     public async Task GetUser_Id2_ReturnsJanet()
     {
-        var response = await _usersClient.GetUser(2);
+        var response = await _userClient.GetUser(2);
 
         Assert.Multiple(() =>
         {
-            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            Assert.That(response.StatusCode, Is.EqualTo(OK));
 
             var json = JObject.Parse(response.Content!);
 
@@ -70,9 +72,9 @@ public class UsersTests
     [Description("GET /users/23 → returns 404 Not Found")]
     public async Task GetUser_Id23_Returns404()
     {
-        var response = await _usersClient.GetUser(23);
+        var response = await _userClient.GetUser(23);
 
-        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
+        Assert.That(response.StatusCode, Is.EqualTo(NotFound));
     }
 
     [Test]
@@ -86,11 +88,11 @@ public class UsersTests
             job = "leader"
         };
 
-        var response = await _usersClient.CreateUser(newUser);
+        var response = await _userClient.CreateUser(newUser);
 
         Assert.Multiple(() =>
         {
-            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Created));
+            Assert.That(response.StatusCode, Is.EqualTo(Created));
 
             var json = JObject.Parse(response.Content!);
             Assert.That(json["name"]?.Value<string>(), Is.EqualTo("morpheus"));
@@ -111,35 +113,11 @@ public class UsersTests
             job = "zion resident"
         };
 
-        var response = await _usersClient.UpdateUser(2, updatedUser);
+        var response = await _userClient.UpdateUser(2, updatedUser);
 
         Assert.Multiple(() =>
         {
-            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
-
-            var json = JObject.Parse(response.Content!);
-            Assert.That(json["name"]?.Value<string>(), Is.EqualTo("morpheus"));
-            Assert.That(json["job"]?.Value<string>(), Is.EqualTo("zion resident"));
-            Assert.That(json["updatedAt"]?.Value<DateTime>(), Is.Not.EqualTo(default(DateTime)));
-        });
-    }
-
-    [Test]
-    [Order(5)]
-    [Description("PATCH /users/2 → updates user data and returns 200 with correct info")]
-    public async Task UpdateUser2_Id2_ValidData_Returns200()
-    {
-        var updatedUser = new UserRequest
-        {
-            name = "morpheus",
-            job = "zion resident"
-        };
-
-        var response = await _usersClient.UpdateUser(2, updatedUser);
-
-        Assert.Multiple(() =>
-        {
-            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            Assert.That(response.StatusCode, Is.EqualTo(OK));
 
             var json = JObject.Parse(response.Content!);
             Assert.That(json["name"]?.Value<string>(), Is.EqualTo("morpheus"));
@@ -150,11 +128,45 @@ public class UsersTests
 
     [Test]
     [Order(6)]
+    [Description("PATCH /users/2 → updates user data and returns 200 with correct info")]
+    public async Task UpdateUser2_Id2_ValidData_Returns200()
+    {
+        var updatedUser = new UserRequest
+        {
+            name = "morpheus",
+            job = "zion resident"
+        };
+
+        var response = await _userClient.UpdateUser(2, updatedUser);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(response.StatusCode, Is.EqualTo(OK));
+
+            var json = JObject.Parse(response.Content!);
+            Assert.That(json["name"]?.Value<string>(), Is.EqualTo("morpheus"));
+            Assert.That(json["job"]?.Value<string>(), Is.EqualTo("zion resident"));
+            Assert.That(json["updatedAt"]?.Value<DateTime>(), Is.Not.EqualTo(default(DateTime)));
+        });
+    }
+
+    [Test]
+    [Order(7)]
     [Description("DELETE /users/2 → deletes user and returns 204 No Content")]
     public async Task DeleteUser_Id2_Returns204()
     {
-        var response = await _usersClient.DeleteUser(2);
+        var response = await _userClient.DeleteUser(2);
 
-        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
+        Assert.That(response.StatusCode, Is.EqualTo(NoContent));
+    }
+
+    [Test]
+    [Order(8)]
+    [Description("GET /users?delay=2 → returns 200 and correct data after delay")]
+    public async Task DelayedResponse_Delay2Seconds_Returns200()
+    {
+        var response = await _userClient.DelayedResponse(2);
+
+        Assert.That(response.StatusCode, Is.EqualTo(OK));
     }
 }

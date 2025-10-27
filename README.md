@@ -28,7 +28,10 @@ Fully portable — **clone & run**. Built in **VS Code**.
 
 ## Run Tests
 ```bash
-dotnet test                                 # All tests
-dotnet test --filter "Category=Unit"        # Unit only
-dotnet test --filter "Category=Integration" # Integration only
+dotnet test                                  # All tests
+dotnet test --filter "Category=UNIT"         # Unit tests only (API and DB have it)
+dotnet test --filter "Category=INTEGRATION"  # Integration tests only (All three testings have it)
+dotnet test --filter "Category=UI"           # UI tests only (Integration)
+dotnet test --filter "Category=API"          # API tests only (Unit & Integration)
+dotnet test --filter "Category=DB"           # DB tests only (Unit & Integration)
 ```

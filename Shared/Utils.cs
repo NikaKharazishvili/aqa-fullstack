@@ -11,4 +11,11 @@ public static class Utils
 
     // Pause for 'seconds'
     public static void Wait(float seconds) => Thread.Sleep((int)(seconds * 1000));
+
+    // Test categories for filtering, e.g.: dotnet test --filter "Category=Integr"
+    public const string API = "Api";
+    public const string DB = "Db";
+    public const string UI = "Ui";
+    public const string UNIT = "Unit";
+    public const string INTEGRATION = "Integration";
 }

@@ -15,12 +15,14 @@ public static class Endpoints
     public const string CreateUser = "users";
     public const string UpdateUser = "users/{id}";
     public const string DeleteUser = "users/{id}";
-
-    // Auth
-    public const string Login = "login";
-    public const string Register = "register";
+    public const string DelayedResponse = "users";
 
     // Resources
     public const string Resources = "unknown";
     public const string SingleResource = "unknown/{id}";
+    public const int InvalidResource = 23;
+
+    // Auth
+    public const string Login = "login";
+    public const string Register = "register";
 }
