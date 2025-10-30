@@ -3,11 +3,11 @@ using ApiTests.Clients;
 using static System.Net.HttpStatusCode;
 using static Shared.Utils;
 
-namespace ApiTests.Tests.Integration;
+namespace ApiTests.Integration;
 
 [TestFixture]
-[Category(Integr)]
-[Category(Api)]
+[Category(INTEGRATION)]
+[Category(API)]
 [Parallelizable(ParallelScope.All)]
 public class ResourceTests
 {

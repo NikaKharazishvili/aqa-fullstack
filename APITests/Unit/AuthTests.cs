@@ -1,0 +1,103 @@
+using Moq;
+using RestSharp;
+using Newtonsoft.Json.Linq;
+using ApiTests.Clients;
+using ApiTests.Models;
+using ApiTests.Unit.Helpers;
+using static System.Net.HttpStatusCode;
+using static Shared.Utils;
+
+namespace ApiTests.Unit;
+
+[TestFixture]
+[Category(UNIT)]
+[Category(API)]
+[Parallelizable(ParallelScope.All)]
+public class AuthTests
+{
+    private Mock<IAuthClient> _mockClient;
+
+    [SetUp]
+    public void Setup() => _mockClient = new Mock<IAuthClient>();
+
+    [Test]
+    [Order(1)]
+    public async Task Register_ValidUser_ReturnsToken()
+    {
+        var request = new AuthRequest { email = "eve.holt@reqres.in", password = "pistol" };
+        var fakeResponse = new RestResponse { StatusCode = OK, Content = JsonLoader.Load("Register_Successful.json"), };
+        _mockClient
+            .Setup(c => c.Register(It.Is<AuthRequest>(r => r.email == request.email && r.password == request.password)))
+            .ReturnsAsync(fakeResponse);
+
+        var response = await _mockClient.Object.Register(request);
+        var parsed = JObject.Parse(response.Content!);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(response.StatusCode, Is.EqualTo(OK));
+            Assert.That(parsed["id"]?.Value<int>(), Is.EqualTo(4));
+            Assert.That(parsed["token"]?.Value<string>(), Is.EqualTo("QpwL5tke4Pnpja7X4"));
+        });
+    }
+
+    [Test]
+    [Order(2)]
+    public async Task Register_MissingPassword_ReturnsError()
+    {
+        var request = new AuthRequest { email = "sydney@fife" };
+        var fakeResponse = new RestResponse { StatusCode = BadRequest, Content = JsonLoader.Load("Register_Unsuccessful.json"), };
+        _mockClient
+            .Setup(c => c.Register(It.Is<AuthRequest>(r => r.email == request.email && string.IsNullOrEmpty(r.password))))
+            .ReturnsAsync(fakeResponse);
+
+        var response = await _mockClient.Object.Register(request);
+        var parsed = JObject.Parse(response.Content!);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(response.StatusCode, Is.EqualTo(BadRequest));
+            Assert.That(parsed["error"]?.Value<string>(), Is.EqualTo("Missing password"));
+        });
+    }
+
+    [Test]
+    [Order(3)]
+    public async Task Login_ValidUser_ReturnsToken()
+    {
+        var request = new AuthRequest { email = "eve.holt@reqres.in", password = "cityslicka" };
+        var fakeResponse = new RestResponse { StatusCode = OK, Content = JsonLoader.Load("Register_Successful.json"), };
+        _mockClient
+            .Setup(c => c.Login(It.Is<AuthRequest>(r => r.email == request.email && r.password == request.password)))
+            .ReturnsAsync(fakeResponse);
+
+        var response = await _mockClient.Object.Register(request);
+        var parsed = JObject.Parse(response.Content!);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(response.StatusCode, Is.EqualTo(OK));
+            Assert.That(parsed["token"]?.Value<string>(), Is.EqualTo("QpwL5tke4Pnpja7X4"));
+        });
+    }
+
+    [Test]
+    [Order(4)]
+    public async Task Login_MissingPassword_ReturnsError()
+    {
+        var request = new AuthRequest { email = "peter@klaven" };
+        var fakeResponse = new RestResponse { StatusCode = BadRequest, Content = JsonLoader.Load("Login_Unsuccessful.json"), };
+        _mockClient
+            .Setup(c => c.Login(It.Is<AuthRequest>(r => r.email == request.email && string.IsNullOrEmpty(r.password))))
+            .ReturnsAsync(fakeResponse);
+
+        var response = await _mockClient.Object.Register(request);
+        var parsed = JObject.Parse(response.Content!);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(response.StatusCode, Is.EqualTo(BadRequest));
+            Assert.That(parsed["error"]?.Value<string>(), Is.EqualTo("Missing password"));
+        });
+    }
+}

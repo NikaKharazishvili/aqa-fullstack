@@ -4,7 +4,7 @@ using ApiTests.Models;
 using static System.Net.HttpStatusCode;
 using static Shared.Utils;
 
-namespace ApiTests.Tests.Integration;
+namespace ApiTests.Integration;
 
 [TestFixture]
 [Category(INTEGRATION)]
