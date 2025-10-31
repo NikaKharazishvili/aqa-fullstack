@@ -18,7 +18,7 @@ public class UsersTests
     private Mock<IUserClient> _mockClient;
 
     [SetUp]
-    public void Setup() => _mockClient = new Mock<IUserClient>();
+    public async Task Setup() => _mockClient = new Mock<IUserClient>();
 
     [Test]
     [Order(1)]

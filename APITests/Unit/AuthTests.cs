@@ -18,7 +18,7 @@ public class AuthTests
     private Mock<IAuthClient> _mockClient;
 
     [SetUp]
-    public void Setup() => _mockClient = new Mock<IAuthClient>();
+    public async Task Setup() => _mockClient = new Mock<IAuthClient>();
 
     [Test]
     [Order(1)]
@@ -71,7 +71,7 @@ public class AuthTests
             .Setup(c => c.Login(It.Is<AuthRequest>(r => r.email == request.email && r.password == request.password)))
             .ReturnsAsync(fakeResponse);
 
-        var response = await _mockClient.Object.Register(request);
+        var response = await _mockClient.Object.Login(request);
         var parsed = JObject.Parse(response.Content!);
 
         Assert.Multiple(() =>
@@ -91,7 +91,7 @@ public class AuthTests
             .Setup(c => c.Login(It.Is<AuthRequest>(r => r.email == request.email && string.IsNullOrEmpty(r.password))))
             .ReturnsAsync(fakeResponse);
 
-        var response = await _mockClient.Object.Register(request);
+        var response = await _mockClient.Object.Login(request);
         var parsed = JObject.Parse(response.Content!);
 
         Assert.Multiple(() =>

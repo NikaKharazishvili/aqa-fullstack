@@ -28,10 +28,12 @@ Fully portable — **clone & run**. Built in **VS Code**.
 
 ## Run Tests
 ```bash
+# Warning:** It is recommended to run Unit and Integration tests **separately** to avoid occasional unit test failures due to timing conflicts
 dotnet test                                  # All tests
-dotnet test --filter "Category=UNIT"         # Unit tests only (API and DB have it)
-dotnet test --filter "Category=INTEGRATION"  # Integration tests only (All three testings have it)
-dotnet test --filter "Category=UI"           # UI tests only (Integration)
-dotnet test --filter "Category=API"          # API tests only (Unit & Integration)
-dotnet test --filter "Category=DB"           # DB tests only (Unit & Integration)
+dotnet test --filter "Category=Unit"         # Unit tests only (API and DB have it)
+dotnet test --filter "Category=Integration"  # Integration tests only (All three testings have it)
+
+dotnet test --filter "Category=Ui"           # UI only (Integration)
+dotnet test --filter "Category=Api"          # API only (Unit + Integration)
+dotnet test --filter "Category=Db"           # DB only (Unit + Integration)
 ```

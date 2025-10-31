@@ -17,7 +17,7 @@ public class ResourceTests
     private Mock<IResourceClient> _mockClient;
 
     [SetUp]
-    public void Setup() => _mockClient = new Mock<IResourceClient>();
+    public async Task Setup() => _mockClient = new Mock<IResourceClient>();
 
     [Test]
     [Order(1)]
@@ -46,7 +46,7 @@ public class ResourceTests
         var fakeResponse = new RestResponse { StatusCode = OK, Content = JsonLoader.Load("GetResource_Id2.json") };
         _mockClient.Setup(c => c.GetResource(2)).ReturnsAsync(fakeResponse);
 
-        var response = await _mockClient.Object.GetResources();
+        var response = await _mockClient.Object.GetResource(2);
         var parsed = JObject.Parse(response.Content!);
         var data = parsed["data"] as JObject;
 
@@ -66,7 +66,7 @@ public class ResourceTests
         var fakeResponse = new RestResponse { StatusCode = NotFound, Content = JsonLoader.Load("GetResource_NotFound.json") };
         _mockClient.Setup(c => c.GetInvalidResource()).ReturnsAsync(fakeResponse);
 
-        var response = await _mockClient.Object.GetResources();
+        var response = await _mockClient.Object.GetInvalidResource();
 
         Assert.That(response.StatusCode, Is.EqualTo(NotFound));
     }
