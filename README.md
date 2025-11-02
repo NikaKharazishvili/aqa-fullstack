@@ -11,7 +11,7 @@
 ## Features
 - **Integration Tests** → Real API, browser, DB
 - **Unit Tests (mocked JSON)** → Fast, offline, validate logic
-- **Smoke Tests** → Fast sanity: "Is API alive?"
+- **Smoke Tests** → "Is API alive?"
 - **Folder-based namespaces** → Scalable
 - **DTOs + Constants** → Type-safe, clean
 
