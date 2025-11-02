@@ -1,7 +1,8 @@
 # aqa-fullstack
 
-**C# automation suite** — API, UI, DB testing with **Unit + Integration** coverage.  
-**Clean architecture**, **OOP**, **POM**, **DRY**.
+**C# automation suite** — API, UI, DB testing with **Unit + Integration + Smoke** coverage.  
+**Clean architecture**, **OOP**, **POM**, **DRY**, **REST best practices**.
+
 **Tech Stack:** .NET 9, C# 12, NUnit, Selenium, RestSharp, Moq, MySQL.
 
 Fully portable — **clone & run**. Built in **VS Code**.
@@ -9,8 +10,9 @@ Fully portable — **clone & run**. Built in **VS Code**.
 ---
 
 ## Features
-- **Unit Tests (mocked JSON)** → Fast, offline, validate parsing & business logic; uses pre-saved API responses
 - **Integration Tests** → Real API, browser, DB
+- **Unit Tests (mocked JSON)** → Fast, offline, validate logic
+- **Smoke Tests** → Fast sanity: "Is API alive?" (CI/CD ready)
 - **Folder-based namespaces** → Scalable
 - **DTOs + Constants** → Type-safe, clean
 - **Shared.Utils** → Reusable methods
@@ -32,6 +34,7 @@ Fully portable — **clone & run**. Built in **VS Code**.
 dotnet test                                  # All tests
 dotnet test --filter "Category=Unit"         # Unit tests only (API and DB have it)
 dotnet test --filter "Category=Integration"  # Integration tests only (All three testings have it)
+dotnet test --filter "Category=Smoke"        # Smoke only
 
 dotnet test --filter "Category=Ui"           # UI only (Integration)
 dotnet test --filter "Category=Api"          # API only (Unit + Integration)

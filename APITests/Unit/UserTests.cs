@@ -9,6 +9,7 @@ using static Shared.Utils;
 
 namespace ApiTests.Unit;
 
+/// <summary>Unit tests mocking user client CRUD and delay scenarios.</summary>
 [TestFixture]
 [Category(UNIT)]
 [Category(API)]
@@ -17,11 +18,9 @@ public class UsersTests
 {
     private Mock<IUserClient> _mockClient;
 
-    [SetUp]
-    public async Task Setup() => _mockClient = new Mock<IUserClient>();
+    [SetUp] public void Setup() => _mockClient = new Mock<IUserClient>();
 
     [Test]
-    [Order(1)]
     [Description("Unit Test → Simulated GET /users?page=2 returns correct data")]
     public async Task GetListUsers_Page2_Returns6Users()
     {
@@ -42,7 +41,6 @@ public class UsersTests
     }
 
     [Test]
-    [Order(2)]
     [Description("Unit Test → Simulated GET /users/2 returns Janet data")]
     public async Task GetUser_Id2_ReturnsJanet()
     {
@@ -61,7 +59,6 @@ public class UsersTests
     }
 
     [Test]
-    [Order(3)]
     [Description("Unit Test → Simulated GET /users/23 returns 404")]
     public async Task GetUser_NotFound_Returns404()
     {
@@ -74,7 +71,6 @@ public class UsersTests
     }
 
     [Test]
-    [Order(4)]
     [Description("Unit Test → Simulated POST /users returns 201")]
     public async Task CreateUser_ValidData_Returns201()
     {
@@ -95,7 +91,6 @@ public class UsersTests
     }
 
     [Test]
-    [Order(5)]
     [Description("Unit Test → Simulated PUT /users/2 returns 200")]
     public async Task UpdateUser_Id2_Returns200()
     {
@@ -115,7 +110,22 @@ public class UsersTests
     }
 
     [Test]
-    [Order(6)]
+    [Description("Unit Test → Simulated PATCH /users/2 returns 200 with partial update")]
+    public async Task PatchUser_Id2_Partial_Returns200()
+    {
+        var fakeResponse = new RestResponse { StatusCode = OK, Content = JsonLoader.Load("UpdateUser_Success.json") };
+        _mockClient.Setup(c => c.PatchUser(2, It.IsAny<UserRequest>())).ReturnsAsync(fakeResponse);
+        var patch = new UserRequest { job = "zion resident" };  // Partial
+        var response = await _mockClient.Object.PatchUser(2, patch);
+        var parsed = JObject.Parse(response.Content!);
+        Assert.Multiple(() =>
+        {
+            Assert.That(response.StatusCode, Is.EqualTo(OK));
+            Assert.That(parsed["job"]?.Value<string>(), Is.EqualTo("zion resident"));
+        });
+    }
+
+    [Test]
     [Description("Unit Test → Simulated DELETE /users/2 returns 204")]
     public async Task DeleteUser_Id2_Returns204()
     {
@@ -128,7 +138,6 @@ public class UsersTests
     }
 
     [Test]
-    [Order(7)]
     [Description("Unit Test → Simulated GET /users?delay=2 returns 200")]
     public async Task DelayedResponse_Returns200()
     {

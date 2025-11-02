@@ -5,22 +5,19 @@ using static Shared.Utils;
 
 namespace ApiTests.Integration;
 
+/// <summary>Integration tests for resource list and single item retrieval.</summary>
 [TestFixture]
 [Category(INTEGRATION)]
 [Category(API)]
 [Parallelizable(ParallelScope.All)]
 public class ResourceTests
 {
-    private IResourceClient _resourceClient;
-
-    [SetUp] public void Setup() => _resourceClient = new ResourceClient();
-
     [Test]
-    [Order(1)]
     [Description("GET /unknown → returns 200 and correct resource data")]
     public async Task GetListResources_Returns6Resources()
     {
-        var response = await _resourceClient.GetResources();
+        using var client = new ResourceClient();
+        var response = await client.GetResources();
 
         Assert.Multiple(() =>
         {
@@ -44,11 +41,11 @@ public class ResourceTests
     }
 
     [Test]
-    [Order(2)]
     [Description("GET /unknown/2 → returns 200 and correct resource data")]
     public async Task GetResource_Id2_ReturnsCorrectResource()
     {
-        var response = await _resourceClient.GetResource(2);
+        using var client = new ResourceClient();
+        var response = await client.GetResource(2);
 
         Assert.Multiple(() =>
         {
@@ -65,11 +62,11 @@ public class ResourceTests
     }
 
     [Test]
-    [Order(3)]
     [Description("GET /unknown/23 → returns 404")]
     public async Task GetResource_Id23_Returns404()
     {
-        var response = await _resourceClient.GetResource(23);
+        using var client = new ResourceClient();
+        var response = await client.GetResource(23);
 
         Assert.That(response.StatusCode, Is.EqualTo(NotFound));
     }

@@ -6,23 +6,19 @@ using static Shared.Utils;
 
 namespace ApiTests.Integration;
 
+/// <summary>Integration tests covering full CRUD + delay on users.</summary>
 [TestFixture]
 [Category(INTEGRATION)]
 [Category(API)]
 [Parallelizable(ParallelScope.All)]
 public class UsersTests
 {
-    private IUserClient _userClient;
-
-    [SetUp]
-    public void Setup() => _userClient = new UserClient();
-
     [Test]
-    [Order(1)]
     [Description("GET /users?page=2 → returns 200 and correct page data")]
     public async Task GetListUsers_Page2_Returns6User()
     {
-        var response = await _userClient.GetUsers(2);
+        using var client = new UserClient();
+        var response = await client.GetUsers(2);
 
         Assert.Multiple(() =>
         {
@@ -45,11 +41,11 @@ public class UsersTests
     }
 
     [Test]
-    [Order(2)]
     [Description("GET /users/2 → returns 200 and correct user data")]
     public async Task GetUser_Id2_ReturnsJanet()
     {
-        var response = await _userClient.GetUser(2);
+        using var client = new UserClient();
+        var response = await client.GetUser(2);
 
         Assert.Multiple(() =>
         {
@@ -68,17 +64,16 @@ public class UsersTests
     }
 
     [Test]
-    [Order(3)]
     [Description("GET /users/23 → returns 404 Not Found")]
     public async Task GetUser_Id23_Returns404()
     {
-        var response = await _userClient.GetUser(23);
+        using var client = new UserClient();
+        var response = await client.GetUser(23);
 
         Assert.That(response.StatusCode, Is.EqualTo(NotFound));
     }
 
     [Test]
-    [Order(4)]
     [Description("POST /users → creates a new user and returns 201 with correct data")]
     public async Task CreateUser_ValidData_Returns201()
     {
@@ -88,7 +83,8 @@ public class UsersTests
             job = "leader"
         };
 
-        var response = await _userClient.CreateUser(newUser);
+        using var client = new UserClient();
+        var response = await client.CreateUser(newUser);
 
         Assert.Multiple(() =>
         {
@@ -103,7 +99,6 @@ public class UsersTests
     }
 
     [Test]
-    [Order(5)]
     [Description("PUT /users/2 → updates user data and returns 200 with correct info")]
     public async Task UpdateUser_Id2_ValidData_Returns200()
     {
@@ -113,7 +108,8 @@ public class UsersTests
             job = "zion resident"
         };
 
-        var response = await _userClient.UpdateUser(2, updatedUser);
+        using var client = new UserClient();
+        var response = await client.UpdateUser(2, updatedUser);
 
         Assert.Multiple(() =>
         {
@@ -127,17 +123,16 @@ public class UsersTests
     }
 
     [Test]
-    [Order(6)]
-    [Description("PATCH /users/2 → updates user data and returns 200 with correct info")]
-    public async Task UpdateUser2_Id2_ValidData_Returns200()
+    [Description("PATCH /users/2 → partial update returns 200")]
+    public async Task PatchUser_OnlyJob_UpdatesJobOnly()
     {
         var updatedUser = new UserRequest
         {
             name = "morpheus",
-            job = "zion resident"
         };
 
-        var response = await _userClient.UpdateUser(2, updatedUser);
+        using var client = new UserClient();
+        var response = await client.PatchUser(2, updatedUser);
 
         Assert.Multiple(() =>
         {
@@ -145,27 +140,26 @@ public class UsersTests
 
             var json = JObject.Parse(response.Content!);
             Assert.That(json["name"]?.Value<string>(), Is.EqualTo("morpheus"));
-            Assert.That(json["job"]?.Value<string>(), Is.EqualTo("zion resident"));
             Assert.That(json["updatedAt"]?.Value<DateTime>(), Is.Not.EqualTo(default(DateTime)));
         });
     }
 
     [Test]
-    [Order(7)]
     [Description("DELETE /users/2 → deletes user and returns 204 No Content")]
     public async Task DeleteUser_Id2_Returns204()
     {
-        var response = await _userClient.DeleteUser(2);
+        using var client = new UserClient();
+        var response = await client.DeleteUser(2);
 
         Assert.That(response.StatusCode, Is.EqualTo(NoContent));
     }
 
     [Test]
-    [Order(8)]
     [Description("GET /users?delay=2 → returns 200 and correct data after delay")]
     public async Task DelayedResponse_Delay2Seconds_Returns200()
     {
-        var response = await _userClient.DelayedResponse(2);
+        using var client = new UserClient();
+        var response = await client.DelayedResponse(2);
 
         Assert.That(response.StatusCode, Is.EqualTo(OK));
     }

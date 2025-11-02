@@ -16,6 +16,7 @@ public static class Utils
     public const string API = "Api";
     public const string DB = "Db";
     public const string UI = "Ui";
-    public const string UNIT = "Unit";
     public const string INTEGRATION = "Integration";
+    public const string SMOKE = "Smoke";
+    public const string UNIT = "Unit";
 }

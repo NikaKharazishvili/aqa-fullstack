@@ -9,6 +9,7 @@ using static Shared.Utils;
 
 namespace ApiTests.Unit;
 
+/// <summary>Unit tests mocking auth client behavior with fake responses.</summary>
 [TestFixture]
 [Category(UNIT)]
 [Category(API)]
@@ -17,11 +18,10 @@ public class AuthTests
 {
     private Mock<IAuthClient> _mockClient;
 
-    [SetUp]
-    public async Task Setup() => _mockClient = new Mock<IAuthClient>();
+    [SetUp] public void Setup() => _mockClient = new Mock<IAuthClient>();
 
     [Test]
-    [Order(1)]
+    [Description("Unit Test → Simulated POST /register returns 200 with token")]
     public async Task Register_ValidUser_ReturnsToken()
     {
         var request = new AuthRequest { email = "eve.holt@reqres.in", password = "pistol" };
@@ -42,7 +42,7 @@ public class AuthTests
     }
 
     [Test]
-    [Order(2)]
+    [Description("Unit Test → Simulated POST /register with missing password returns 400")]
     public async Task Register_MissingPassword_ReturnsError()
     {
         var request = new AuthRequest { email = "sydney@fife" };
@@ -62,7 +62,7 @@ public class AuthTests
     }
 
     [Test]
-    [Order(3)]
+    [Description("Unit Test → Simulated POST /login returns 200 with token")]
     public async Task Login_ValidUser_ReturnsToken()
     {
         var request = new AuthRequest { email = "eve.holt@reqres.in", password = "cityslicka" };
@@ -82,7 +82,7 @@ public class AuthTests
     }
 
     [Test]
-    [Order(4)]
+    [Description("Unit Test → Simulated POST /login with missing password returns 400")]
     public async Task Login_MissingPassword_ReturnsError()
     {
         var request = new AuthRequest { email = "peter@klaven" };

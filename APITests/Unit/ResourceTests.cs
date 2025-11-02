@@ -8,6 +8,7 @@ using static Shared.Utils;
 
 namespace ApiTests.Unit;
 
+/// <summary>Unit tests mocking resource client with predefined JSON.</summary>
 [TestFixture]
 [Category(UNIT)]
 [Category(API)]
@@ -16,11 +17,9 @@ public class ResourceTests
 {
     private Mock<IResourceClient> _mockClient;
 
-    [SetUp]
-    public async Task Setup() => _mockClient = new Mock<IResourceClient>();
+    [SetUp] public void Setup() => _mockClient = new Mock<IResourceClient>();
 
     [Test]
-    [Order(1)]
     [Description("Unit Test → Simulated GET /unknown returns correct data")]
     public async Task GetListResources_ReturnsExpectedJson()
     {
@@ -39,7 +38,6 @@ public class ResourceTests
     }
 
     [Test]
-    [Order(2)]
     [Description("Unit Test → Simulated GET /unknown/2 returns correct data")]
     public async Task GetResource_Id2_ReturnsExpectedJson()
     {
@@ -59,7 +57,6 @@ public class ResourceTests
     }
 
     [Test]
-    [Order(3)]
     [Description("Unit Test → Simulated GET /unknown/23 returns 404")]
     public async Task GetResource_NotFound_Returns404()
     {

@@ -6,19 +6,14 @@ using static Shared.Utils;
 
 namespace ApiTests.Integration;
 
+/// <summary>Integration tests verifying real API auth behavior.</summary>
 [TestFixture]
 [Category(INTEGRATION)]
 [Category(API)]
 [Parallelizable(ParallelScope.All)]
 public class AuthTests
 {
-    private IAuthClient _authClient;
-
-    [SetUp]
-    public void Setup() => _authClient = new AuthClient();
-
     [Test]
-    [Order(1)]
     [Description("POST /register → returns 200 and token for successful registration")]
     public async Task Register_ValidUser_ReturnsToken()
     {
@@ -28,7 +23,8 @@ public class AuthTests
             password = "pistol"
         };
 
-        var response = await _authClient.Register(authRequest);
+        using var client = new AuthClient();
+        var response = await client.Register(authRequest);
 
         Assert.Multiple(() =>
         {
@@ -42,7 +38,6 @@ public class AuthTests
 
 
     [Test]
-    [Order(2)]
     [Description("POST /register → returns 400 and error for missing password")]
     public async Task Register_MissingPassword_ReturnsError()
     {
@@ -51,7 +46,8 @@ public class AuthTests
             email = "sydney@fife"
         };
 
-        var response = await _authClient.Register(authRequest);
+        using var client = new AuthClient();
+        var response = await client.Register(authRequest);
 
         Assert.Multiple(() =>
         {
@@ -63,7 +59,6 @@ public class AuthTests
     }
 
     [Test]
-    [Order(3)]
     [Description("POST /login → returns 200 and token for successful login")]
     public async Task Login_ValidUser_ReturnsToken()
     {
@@ -73,7 +68,8 @@ public class AuthTests
             password = "cityslicka"
         };
 
-        var response = await _authClient.Login(authRequest);
+        using var client = new AuthClient();
+        var response = await client.Login(authRequest);
 
         Assert.Multiple(() =>
         {
@@ -85,7 +81,6 @@ public class AuthTests
     }
 
     [Test]
-    [Order(4)]
     [Description("POST /login → returns 400 and error for missing password")]
     public async Task Login_MissingPassword_ReturnsError()
     {
@@ -94,7 +89,9 @@ public class AuthTests
             email = "peter@klaven"
         };
 
-        var response = await _authClient.Login(authRequest);
+
+        using var client = new AuthClient();
+        var response = await client.Login(authRequest);
 
         Assert.Multiple(() =>
         {

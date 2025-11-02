@@ -1,5 +1,6 @@
 namespace ApiTests.Constants;
 
+/// <summary>Centralized API endpoint paths, base URL, and headers.</summary>
 public static class Endpoints
 {
     // Base URL
