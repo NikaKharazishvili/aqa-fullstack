@@ -2,27 +2,18 @@
 
 **C# automation suite** — API, UI, DB testing with **Integration + Unit + Smoke** coverage.
 
-**Clean architecture**, **OOP**, **POM**, **DRY**.
-
-**Fully portable** — clone & run. Built in **VS Code**.
+**Clean architecture**, **OOP**, **POM**, **DRY**, **DTOs**, **Folder-based namespaces**.
 
 **Tech Stack:** .NET 9, C# 12, NUnit, Selenium, RestSharp, Moq, MySQL, Json.
 
----
-
-## Features
-- **Integration Tests** → Real API, browser, DB
-- **Unit Tests (mocked JSON)** → Fast, offline, validate logic
-- **Smoke Tests** → "Is API alive?"
-- **Folder-based namespaces** → Scalable
-- **DTOs + Constants** → Type-safe, clean
+**Fully portable** — clone & run. Built in **VS Code**.
 
 ---
 
 ## Project Structure
 - aqa-fullstack/
-- ├── ApiTests/        → RestSharp + unit mocks (reqres.in)
-- ├── DbTests/         → MySql.Data + unit mocks (db4free.net)
+- ├── ApiTests/        → RestSharp + Unit Mocks (reqres.in)
+- ├── DbTests/         → MySql.Data + Unit Mocks (db4free.net)
 - ├── UiTests/         → Selenium (practice-automation.com)
 - └── Shared/Utils.cs
 
