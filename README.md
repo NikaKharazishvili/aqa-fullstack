@@ -2,8 +2,7 @@
 
 **C# automation suite** — API, UI, DB testing with **Integration + Unit + Smoke** coverage.
 **Clean architecture**, **OOP**, **POM**, **DRY**.
-**Fully portable** — clone & run. Built in **VS Code**..
-
+**Fully portable** — clone & run. Built in **VS Code**.
 **Tech Stack:** .NET 9, C# 12, NUnit, Selenium, RestSharp, Moq, MySQL, Json.
 
 ---
