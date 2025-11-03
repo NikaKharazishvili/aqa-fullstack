@@ -6,14 +6,14 @@
 
 **Tech Stack:** .NET 9, C# 12, NUnit, Selenium, RestSharp, Moq, MySQL, Json.
 
-**Fully portable** — clone & run. Built in **VS Code**.
+**Fully portable** — clone & run, no extra setup required. Built in **VS Code**.
 
 ---
 
 ## Project Structure
 - aqa-fullstack/
 - ├── ApiTests/        → RestSharp + Unit Mocks (reqres.in)
-- ├── DbTests/         → MySql.Data + Unit Mocks (db4free.net)
+- ├── DbTests/         → Sqlite (local SQL file)
 - ├── UiTests/         → Selenium (practice-automation.com)
 - └── Shared/Utils.cs
 
@@ -24,10 +24,10 @@
 # Warning: It is recommended to run Unit and Integration tests separately
 # to avoid occasional unit test failures due to timing conflicts
 dotnet test --filter "Category=Integration"  # Integration tests only (All three testings have it)
-dotnet test --filter "Category=Unit"         # Unit tests only (API and DB have it)
 dotnet test --filter "Category=Smoke"        # Smoke tests only (All three testings have it)
+dotnet test --filter "Category=Unit"         # Unit tests only (Only Api testings has it)
 
-dotnet test --filter "Category=Ui"           # UI only (Integration)
-dotnet test --filter "Category=Api"          # API only (Unit + Integration)
-dotnet test --filter "Category=Db"           # DB only (Unit + Integration)
+dotnet test --filter "Category=Ui"           # UI only (Integration + Smoke)
+dotnet test --filter "Category=Api"          # API only (Integration + Smoke + Unit)
+dotnet test --filter "Category=Db"           # DB only (Integration + Smoke)
 ```
