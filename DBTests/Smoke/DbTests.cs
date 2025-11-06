@@ -8,7 +8,7 @@ namespace DbTests.Smoke;
 [Category(SMOKE)]
 [Category(DB)]
 [Parallelizable(ParallelScope.All)]
-public class DbSmokeTest
+public class DbTests
 {
     private SqliteConnection _connection = null!;
 

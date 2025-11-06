@@ -8,7 +8,7 @@ namespace DbTests.Integration;
 [Category(INTEGRATION)]
 [Category(DB)]
 [Parallelizable(ParallelScope.All)]
-public class DbIntegrationTests
+public class DbTests
 {
     SqliteConnection _connection = null!;
 
