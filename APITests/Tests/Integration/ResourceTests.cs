@@ -3,7 +3,7 @@ using ApiTests.Clients;
 using static System.Net.HttpStatusCode;
 using static Shared.Utils;
 
-namespace ApiTests.Integration;
+namespace ApiTests.Tests.Integration;
 
 /// <summary>Integration tests for resource list and single item retrieval.</summary>
 [TestFixture]

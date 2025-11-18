@@ -1,7 +1,7 @@
 using Microsoft.Data.Sqlite;
 using static Shared.Utils;
 
-namespace DbTests.Integration;
+namespace DbTests.Tests.Integration;
 
 /// <summary>Integration tests for accounts table using a local in-memory SQLite database. Simplified for clone & run; no real DB server required.</summary>
 [TestFixture]
@@ -18,9 +18,9 @@ public class DbTests
         _connection = new SqliteConnection("Data Source=:memory:");
         _connection.Open();
 
-        string sqlPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"..\..\..\TestData\game_accounts.sql");
-        if (!File.Exists(sqlPath))
-            Assert.Fail($"SQL file not found at: {sqlPath}");
+        // Path: bin/Debug/net9.0/game_accounts.sql
+        string sqlPath = Path.Combine(TestContext.CurrentContext.TestDirectory, "game_accounts.sql");
+        if (!File.Exists(sqlPath)) Assert.Fail($"SQL file not found at: {sqlPath}");
 
         string script = File.ReadAllText(sqlPath);
         string[] commands = script.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
@@ -29,8 +29,7 @@ public class DbTests
         {
             using var cmd = _connection.CreateCommand();
             cmd.CommandText = cmdText.Trim();
-            if (!string.IsNullOrWhiteSpace(cmd.CommandText))
-                cmd.ExecuteNonQuery();
+            if (!string.IsNullOrWhiteSpace(cmd.CommandText)) cmd.ExecuteNonQuery();
         }
     }
 
@@ -39,6 +38,14 @@ public class DbTests
     {
         _connection?.Close();
         _connection?.Dispose();
+    }
+
+    void ExecuteQueryAndAssert(string query, Action<SqliteDataReader> assertAction)
+    {
+        using var cmd = _connection.CreateCommand();
+        cmd.CommandText = query;
+        using var reader = cmd.ExecuteReader();
+        assertAction(reader);
     }
 
     [Test]
@@ -84,12 +91,4 @@ public class DbTests
             Assert.That(reader["password"], Is.EqualTo("DragonSlayer"));
             Assert.That(reader["email"], Is.EqualTo("shadowfang@mail.com"));
         });
-
-    void ExecuteQueryAndAssert(string query, Action<SqliteDataReader> assertAction)
-    {
-        using var cmd = _connection.CreateCommand();
-        cmd.CommandText = query;
-        using var reader = cmd.ExecuteReader();
-        assertAction(reader);
-    }
 }

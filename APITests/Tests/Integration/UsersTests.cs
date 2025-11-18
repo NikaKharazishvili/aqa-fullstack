@@ -4,7 +4,7 @@ using ApiTests.Models;
 using static System.Net.HttpStatusCode;
 using static Shared.Utils;
 
-namespace ApiTests.Integration;
+namespace ApiTests.Tests.Integration;
 
 /// <summary>Integration tests covering full CRUD + delay on users.</summary>
 [TestFixture]

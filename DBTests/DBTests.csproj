@@ -9,19 +9,25 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="coverlet.collector" Version="6.0.2" />
+    <!-- Auto-generated test packages -->
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
     <PackageReference Include="NUnit" Version="4.2.2" />
-    <PackageReference Include="NUnit.Analyzers" Version="4.4.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="4.6.0" />
+    <PackageReference Include="NUnit.Analyzers" Version="4.4.0" />
+    <PackageReference Include="coverlet.collector" Version="6.0.2" />
+
+    <!-- Project-specific packages -->
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.10" />
-  </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Shared\Shared.csproj" />
-  </ItemGroup>
+    <!-- Shared utilities for all tests -->
+    <ProjectReference Include="../Shared/Shared.csproj" />
 
-  <ItemGroup>
+    <!-- SQL script: copy to output -->
+    <None Update="game_accounts.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+
+    <!-- Auto-generated global usings -->
     <Using Include="NUnit.Framework" />
   </ItemGroup>
 

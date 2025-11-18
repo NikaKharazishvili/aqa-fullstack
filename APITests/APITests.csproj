@@ -9,21 +9,25 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="coverlet.collector" Version="6.0.2" />
+    <!-- Auto-generated test packages -->
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
     <PackageReference Include="NUnit" Version="4.2.2" />
-    <PackageReference Include="NUnit.Analyzers" Version="4.4.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="4.6.0" />
+    <PackageReference Include="NUnit.Analyzers" Version="4.4.0" />
+    <PackageReference Include="coverlet.collector" Version="6.0.2" />
+
+    <!-- Project-specific packages -->
     <PackageReference Include="Moq" Version="4.20.72" />
     <PackageReference Include="RestSharp" Version="112.1.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
-  </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Shared\Shared.csproj" />
-  </ItemGroup>
+    <!-- Shared utilities for all tests -->
+    <ProjectReference Include="../Shared/Shared.csproj" />
 
-  <ItemGroup>
+    <!-- Embedded JSON test data into the assembly (no runtime file paths) -->
+    <EmbeddedResource Include="Tests/Unit/TestData/*.json" />
+
+    <!-- Auto-generated global usings -->
     <Using Include="NUnit.Framework" />
   </ItemGroup>
 

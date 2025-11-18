@@ -3,11 +3,10 @@ using RestSharp;
 using Newtonsoft.Json.Linq;
 using ApiTests.Clients;
 using ApiTests.Models;
-using ApiTests.Unit.Helpers;
 using static System.Net.HttpStatusCode;
 using static Shared.Utils;
 
-namespace ApiTests.Unit;
+namespace ApiTests.Tests.Unit;
 
 /// <summary>Unit tests mocking auth client behavior with fake responses.</summary>
 [TestFixture]
@@ -25,7 +24,7 @@ public class AuthTests
     public async Task Register_ValidUser_ReturnsToken()
     {
         var request = new AuthRequest { email = "eve.holt@reqres.in", password = "pistol" };
-        var fakeResponse = new RestResponse { StatusCode = OK, Content = JsonLoader.Load("Register_Successful.json"), };
+        var fakeResponse = new RestResponse { StatusCode = OK, Content = JsonLoad("Register_Successful.json"), };
         _mockClient
             .Setup(c => c.Register(It.Is<AuthRequest>(r => r.email == request.email && r.password == request.password)))
             .ReturnsAsync(fakeResponse);
@@ -46,7 +45,7 @@ public class AuthTests
     public async Task Register_MissingPassword_ReturnsError()
     {
         var request = new AuthRequest { email = "sydney@fife" };
-        var fakeResponse = new RestResponse { StatusCode = BadRequest, Content = JsonLoader.Load("Register_Unsuccessful.json"), };
+        var fakeResponse = new RestResponse { StatusCode = BadRequest, Content = JsonLoad("Register_Unsuccessful.json"), };
         _mockClient
             .Setup(c => c.Register(It.Is<AuthRequest>(r => r.email == request.email && string.IsNullOrEmpty(r.password))))
             .ReturnsAsync(fakeResponse);
@@ -66,7 +65,7 @@ public class AuthTests
     public async Task Login_ValidUser_ReturnsToken()
     {
         var request = new AuthRequest { email = "eve.holt@reqres.in", password = "cityslicka" };
-        var fakeResponse = new RestResponse { StatusCode = OK, Content = JsonLoader.Load("Register_Successful.json"), };
+        var fakeResponse = new RestResponse { StatusCode = OK, Content = JsonLoad("Register_Successful.json"), };
         _mockClient
             .Setup(c => c.Login(It.Is<AuthRequest>(r => r.email == request.email && r.password == request.password)))
             .ReturnsAsync(fakeResponse);
@@ -86,7 +85,7 @@ public class AuthTests
     public async Task Login_MissingPassword_ReturnsError()
     {
         var request = new AuthRequest { email = "peter@klaven" };
-        var fakeResponse = new RestResponse { StatusCode = BadRequest, Content = JsonLoader.Load("Login_Unsuccessful.json"), };
+        var fakeResponse = new RestResponse { StatusCode = BadRequest, Content = JsonLoad("Login_Unsuccessful.json"), };
         _mockClient
             .Setup(c => c.Login(It.Is<AuthRequest>(r => r.email == request.email && string.IsNullOrEmpty(r.password))))
             .ReturnsAsync(fakeResponse);
