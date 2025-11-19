@@ -1,4 +1,4 @@
-using Moq;
+﻿using Moq;
 using RestSharp;
 using Newtonsoft.Json.Linq;
 using ApiTests.Clients;
@@ -12,7 +12,7 @@ namespace ApiTests.Tests.Unit;
 [TestFixture]
 [Category(UNIT)]
 [Category(API)]
-[Parallelizable(ParallelScope.All)]
+[Parallelizable(ParallelScope.Fixtures)]
 public class UsersTests
 {
     private Mock<IUserClient> _mockClient;

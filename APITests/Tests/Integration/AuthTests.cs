@@ -1,4 +1,4 @@
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using ApiTests.Clients;
 using ApiTests.Models;
 using static System.Net.HttpStatusCode;
@@ -10,7 +10,7 @@ namespace ApiTests.Tests.Integration;
 [TestFixture]
 [Category(INTEGRATION)]
 [Category(API)]
-[Parallelizable(ParallelScope.All)]
+[Parallelizable(ParallelScope.Fixtures)]
 public class AuthTests
 {
     [Test]

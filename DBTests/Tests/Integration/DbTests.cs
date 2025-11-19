@@ -1,4 +1,4 @@
-using Microsoft.Data.Sqlite;
+﻿using Microsoft.Data.Sqlite;
 using static Shared.Utils;
 
 namespace DbTests.Tests.Integration;
@@ -7,7 +7,7 @@ namespace DbTests.Tests.Integration;
 [TestFixture]
 [Category(INTEGRATION)]
 [Category(DB)]
-[Parallelizable(ParallelScope.All)]
+[Parallelizable(ParallelScope.Fixtures)]
 public class DbTests
 {
     SqliteConnection _connection = null!;

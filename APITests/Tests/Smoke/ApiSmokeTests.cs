@@ -1,4 +1,4 @@
-using ApiTests.Clients;
+﻿using ApiTests.Clients;
 using static System.Net.HttpStatusCode;
 using static Shared.Utils;
 
@@ -8,7 +8,7 @@ namespace ApiTests.Tests.Smoke;
 [TestFixture]
 [Category(SMOKE)]
 [Category(API)]
-[Parallelizable(ParallelScope.All)]
+[Parallelizable(ParallelScope.Fixtures)]
 public class ApiSmokeTests
 {
     [Test]

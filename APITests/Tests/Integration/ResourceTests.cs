@@ -1,4 +1,4 @@
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using ApiTests.Clients;
 using static System.Net.HttpStatusCode;
 using static Shared.Utils;
@@ -9,7 +9,7 @@ namespace ApiTests.Tests.Integration;
 [TestFixture]
 [Category(INTEGRATION)]
 [Category(API)]
-[Parallelizable(ParallelScope.All)]
+[Parallelizable(ParallelScope.Fixtures)]
 public class ResourceTests
 {
     [Test]
