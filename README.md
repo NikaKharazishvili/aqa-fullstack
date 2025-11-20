@@ -29,5 +29,5 @@ dotnet test --filter "Category=Unit"         # Unit tests only (Only Api testing
 
 dotnet test --filter "Category=Ui"           # UI only (Integration + Smoke)
 dotnet test --filter "Category=Api"          # API only (Integration + Smoke + Unit)
-dotnet test --filter "Category=Db"           # DB only (Integration + Smoke)
+dotnet test --filter "Category=Db"           # DB only (Integration)
 ```

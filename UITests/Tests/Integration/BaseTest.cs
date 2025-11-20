@@ -2,6 +2,7 @@
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using UiTests.Core;
+using WebDriverManager.DriverConfigs.Impl;
 using static Shared.Utils;
 
 namespace UiTests.Tests;
@@ -26,7 +27,7 @@ public abstract class BaseTest
         };
 
         DriverManager.SetDriver(driver);
-        driver.Manage().Window.Maximize();
+        if (!headless) driver.Manage().Window.Maximize();
         driver.Navigate().GoToUrl(ConfigReader.Get<string>("Url"));
     }
 
@@ -35,15 +36,30 @@ public abstract class BaseTest
 
     IWebDriver CreateChrome(bool headless)
     {
+        // Auto-downloads matching ChromeDriver to avoid version conflicts. Ensures tests run on any PC/CI environment without manual driver setup
+        new WebDriverManager.DriverManager().SetUpDriver(new ChromeConfig());
+
         var options = new ChromeOptions();
-        if (headless) options.AddArgument("--headless=new");
+        if (headless)
+        {
+            options.AddArgument("--headless=new");
+            options.AddArgument("--window-size=1920,1080");
+        }
         return new ChromeDriver(options);
     }
 
     IWebDriver CreateFirefox(bool headless)
     {
+        // Auto-downloads matching ChromeDriver to avoid version conflicts. Ensures tests run on any PC/CI environment without manual driver setup
+        new WebDriverManager.DriverManager().SetUpDriver(new FirefoxConfig());
+
         var options = new FirefoxOptions();
-        if (headless) options.AddArgument("--headless");
+        if (headless)
+        {
+            options.AddArgument("--headless");
+            options.AddArgument("--width=1920");
+            options.AddArgument("--height=1080");
+        }
         return new FirefoxDriver(options);
     }
 }
