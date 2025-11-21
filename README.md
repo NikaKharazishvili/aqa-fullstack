@@ -5,12 +5,11 @@
 ![.NET 9](https://img.shields.io/badge/.NET-9.0-512BD4?logo=.net)  
 ![C# 12](https://img.shields.io/badge/C%23-12-239120?logo=csharp)  
 ![NUnit](https://img.shields.io/badge/NUnit-4.2-006400)  
-![Selenium · RestSharp · SQLite](https://img.shields.io/badge/Tools-Selenium%20%7C%20RestSharp%20%7C%20SQLite-000000)
+![Selenium · RestSharp · SQLite](https://img.shields.io/badge/Tools-Selenium%20%7C%20RestSharp%20%7C%20SQLite(MySQL example included but disabled)-000000)
 
 ---
 
 ## Key Features:
-- Tech Stack: .NET 9, C# 12, NUnit, Selenium, RestSharp, Moq, Json, SQLite(MySQL example included but disabled)
 - Clean architecture (interface-based clients, DTOs, POM)
 - Parallel execution (all fixtures + safe UI concurrency via `[LevelOfParallelism(4)]`)
 - Zero setup (WebDriverManager auto-downloads drivers, in-memory DB, embedded JSON fixtures)
