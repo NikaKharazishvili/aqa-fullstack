@@ -10,7 +10,6 @@
 ---
 
 ## Key Features:
-- Tech Stack: .NET 9, C# 12, NUnit, Selenium, RestSharp, Moq, Json, SQLite(MySQL example included but disabled)
 - Clean architecture (interface-based clients, DTOs, POM)
 - Parallel execution (all fixtures + safe UI concurrency via `[LevelOfParallelism(4)]`)
 - Zero setup (WebDriverManager auto-downloads drivers, in-memory DB, embedded JSON fixtures)
