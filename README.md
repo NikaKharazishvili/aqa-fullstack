@@ -1,12 +1,12 @@
-# C# Full-Stack Test Automation Suite*
+# aqa-fullstack
 
 **C# Full-Stack Test Automation Suite** - **API • UI • DB** testings with **Integration • Unit • Smoke** coverage
 
 **Key Features**
-- Tech Stack: .NET 9, C# 12, NUnit, Selenium, RestSharp, Moq, Newtonsoft.Json, SQLite(MySQL example included but disabled)
+- Tech Stack: .NET 9, C# 12, NUnit, Selenium, RestSharp, Moq, Json, SQLite(MySQL example included but disabled)
 - Clean architecture (interface-based clients, DTOs, POM)
 - Parallel execution (all fixtures + safe UI concurrency via `[LevelOfParallelism(4)]`)
-- Zero setup (`WebDriverManager` auto-downloads drivers, in-memory DB, embedded JSON fixtures)
+- Zero setup (WebDriverManager auto-downloads drivers, in-memory DB, embedded JSON fixtures)
 - Fully portable (clone & run)
 
 ---
