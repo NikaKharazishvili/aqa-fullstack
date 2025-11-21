@@ -18,11 +18,11 @@
 ---
 
 ## Project Structure:
-aqa-fullstack/
-├── ApiTests/    RestSharp + full CRUD/auth + Moq unit tests (reqres.in)
-├── DbTests/     In-memory SQLite tests + disabled real MySQL example
-├── UiTests/     Selenium + POM + config-driven data (practice-automation.com)
-└── Shared/      Common helpers & test categories
+- aqa-fullstack/
+- ├── ApiTests/        → RestSharp + full CRUD/auth + Moq unit tests (reqres.in)
+- ├── DbTests/         → In-memory SQLite tests + disabled real MySQL example
+- ├── UiTests/         → Selenium + POM + config-driven data (practice-automation.com)
+- └── Shared/Utils.cs
 
 ---
 
