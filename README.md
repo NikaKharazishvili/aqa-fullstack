@@ -1,6 +1,7 @@
 # aqa-fullstack
 
 **C# Full-Stack Test Automation Suite**
+
 **API • UI • DB** tests with **Integration • Unit • Smoke** coverage
 
 ---
