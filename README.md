@@ -1,33 +1,28 @@
-# aqa-fullstack
+# C# Full-Stack Test Automation Suite*
 
-**C# automation suite** — API, UI, DB testing with **Integration + Unit + Smoke** coverage.
+**C# Full-Stack Test Automation Suite** - **API • UI • DB** testings with **Integration • Unit • Smoke** coverage
 
-**Clean architecture**, **OOP**, **POM**, **DRY**, **DTOs**, **Folder-based namespaces**.
-
-**Tech Stack:** .NET 9, C# 12, NUnit, Selenium, RestSharp, MySQL, Moq, Json.
-
-**Fully portable** — clone & run, no extra setup required. Built in **VS Code**.
+**Key Features**
+- Tech Stack: .NET 9, C# 12, NUnit, Selenium, RestSharp, Moq, Newtonsoft.Json, SQLite(MySQL example included but disabled)
+- Clean architecture (interface-based clients, DTOs, POM)
+- Parallel execution (all fixtures + safe UI concurrency via `[LevelOfParallelism(4)]`)
+- Zero setup (`WebDriverManager` auto-downloads drivers, in-memory DB, embedded JSON fixtures)
+- Fully portable (clone & run)
 
 ---
-
 ## Project Structure
 - aqa-fullstack/
-- ├── ApiTests/        → RestSharp + Unit Mocks (reqres.in)
-- ├── DbTests/         → Sqlite (local SQL file)
-- ├── UiTests/         → Selenium (practice-automation.com)
+- ├── ApiTests/        → RestSharp + full CRUD/auth + Moq unit tests (reqres.in)
+- ├── DbTests/         → In-memory SQLite tests + disabled real MySQL example
+- ├── UiTests/         → Selenium + POM + config-driven data (practice-automation.com)
 - └── Shared/Utils.cs
-
 ---
 
 ## Run Tests
 ```bash
-dotnet test                                  # All three testings paralelly
-
-dotnet test --filter "Category=Integration"  # Integration tests only (All three testings have it)
-dotnet test --filter "Category=Smoke"        # Smoke tests only (Only Ui and Api testings have it)
-dotnet test --filter "Category=Unit"         # Unit tests only (Only Api testings have it)
-
-dotnet test --filter "Category=Ui"           # UI only (Integration + Smoke)
-dotnet test --filter "Category=Api"          # API only (Integration + Smoke + Unit)
-dotnet test --filter "Category=Db"           # DB only (Integration)
+dotnet test                                  # Everything in parallel
+dotnet test --filter "Category=Integration"  # Real API + DB + UI calls
+dotnet test --filter "Category=Unit"         # Pure API unit(Moq) tests
+dotnet test --filter "Category=Smoke"        # Quick API health check
+dotnet test --filter "Category=Api|Ui|Db"    # By layer
 ```
