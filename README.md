@@ -5,7 +5,7 @@
 ![.NET 9](https://img.shields.io/badge/.NET-9.0-512BD4?logo=.net)  
 ![C# 12](https://img.shields.io/badge/C%23-12-239120?logo=csharp)  
 ![NUnit](https://img.shields.io/badge/NUnit-4.2-006400)  
-![Selenium · RestSharp · SQLite](https://img.shields.io/badge/Tools-Selenium%20%7C%20RestSharp%20%7C%20SQLite(MySQL example included but disabled)-000000)
+![Selenium · RestSharp · SQLite (MySQL example included but disabled)](https://img.shields.io/badge/Tools-Selenium%20%7C%20RestSharp%20%7C%20SQLite-000000)
 
 ---
 
