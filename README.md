@@ -5,7 +5,7 @@
 ![.NET 9](https://img.shields.io/badge/.NET-9.0-512BD4?logo=.net)  
 ![C# 12](https://img.shields.io/badge/C%23-12-239120?logo=csharp)  
 ![NUnit](https://img.shields.io/badge/NUnit-4.2-006400)  
-![Selenium · RestSharp · SQLite/MySQL](https://img.shields.io/badge/Tools-Selenium%20%7C%20RestSharp%20%7C%20SQLite/MySQL-000000)
+![Selenium · RestSharp · SQLite/MySQL · Newtonsoft.Json · Moq](https://img.shields.io/badge/Tools-Selenium%20%7C%20RestSharp%20%7C%20SQLite/MySQL%20%7C%20Newtonsoft.Json%20%7C%20Moq-000000)
 
 ---
 
