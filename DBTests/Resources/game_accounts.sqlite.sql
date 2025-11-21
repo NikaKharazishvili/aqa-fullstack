@@ -1,10 +1,6 @@
--- `CREATE DATABASE` and `USE` are commented out — SQLite in-memory mode does not support them (no external DB setup, clone & run only).
--- CREATE DATABASE game_accounts;
--- USE game_accounts;
-
+-- Create the accounts table
 CREATE TABLE accounts (
-    -- id INT AUTO_INCREMENT PRIMARY KEY,  -- For MySQL
-    id INTEGER PRIMARY KEY AUTOINCREMENT,  -- For SQLite
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     username VARCHAR(20) NOT NULL UNIQUE,
     password VARCHAR(20) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,

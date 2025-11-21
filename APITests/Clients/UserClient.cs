@@ -5,18 +5,8 @@ using ApiTests.Models;
 namespace ApiTests.Clients;
 
 /// <summary>Implements API calls for user management (CRUD + delay).</summary>
-public class UserClient : IUserClient, IDisposable
+public class UserClient : BaseClient, IUserClient
 {
-    private readonly RestClient client;
-
-    public UserClient()
-    {
-        client = new RestClient(Endpoints.BaseUrl);
-        client.AddDefaultHeader(Endpoints.ApiKeyHeader, Endpoints.ApiKeyValue);
-    }
-    
-    public void Dispose() => client.Dispose();
-
     // https://reqres.in/api/users?page=2
     public async Task<RestResponse> GetUsers(int pageId) => await client.ExecuteAsync(new RestRequest(Endpoints.Users).AddQueryParameter("page", pageId));
 

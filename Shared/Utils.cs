@@ -16,12 +16,12 @@ public static class Utils
     // Pause for 'seconds'
     public static void Wait(float seconds) => Thread.Sleep((int)(seconds * 1000));
 
-    // Loads JSON test data from files for Api Unit test mocking
-    public static string JsonLoad(string fileName)
+    // Loads an embedded resource file as a string. Used by tests to load config files, SQL scripts, or JSON test data
+    public static string LoadEmbeddedText(string resourcePath)
     {
-        var assembly = Assembly.GetCallingAssembly();  // The assembly of the project that *called* this method (e.g. ApiTests.dll)
-        var resourceName = $"ApiTests.Tests.Unit.TestData.{fileName}";  // Full embedded resource path
-        using var stream = assembly.GetManifestResourceStream(resourceName) ?? throw new FileNotFoundException($"Embedded JSON not found: {resourceName}");  // Throw error if not found
+        var assembly = Assembly.GetCallingAssembly();
+        var resourceName = $"{assembly.GetName().Name}.{resourcePath.Replace('/', '.').Replace('\\', '.')}";
+        var stream = assembly.GetManifestResourceStream(resourceName) ?? throw new FileNotFoundException($"Missing embedded resource: {resourceName}");
         return new StreamReader(stream).ReadToEnd();
     }
 }

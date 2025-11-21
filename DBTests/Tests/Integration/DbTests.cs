@@ -18,18 +18,16 @@ public class DbTests
         _connection = new SqliteConnection("Data Source=:memory:");
         _connection.Open();
 
-        // Path: bin/Debug/net9.0/game_accounts.sql
-        string sqlPath = Path.Combine(TestContext.CurrentContext.TestDirectory, "game_accounts.sql");
-        if (!File.Exists(sqlPath)) Assert.Fail($"SQL file not found at: {sqlPath}");
+        // Load embedded SQL script
+        string script = LoadEmbeddedText("Resources/game_accounts.sqlite.sql");
 
-        string script = File.ReadAllText(sqlPath);
         string[] commands = script.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
-
         foreach (var cmdText in commands)
         {
+            if (string.IsNullOrWhiteSpace(cmdText)) continue;
             using var cmd = _connection.CreateCommand();
             cmd.CommandText = cmdText.Trim();
-            if (!string.IsNullOrWhiteSpace(cmd.CommandText)) cmd.ExecuteNonQuery();
+            cmd.ExecuteNonQuery();
         }
     }
 

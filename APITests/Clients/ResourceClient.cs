@@ -4,18 +4,8 @@ using ApiTests.Constants;
 namespace ApiTests.Clients;
 
 /// <summary>Implements API calls for resource endpoints (list, single, not found).</summary>
-public class ResourceClient : IResourceClient, IDisposable
+public class ResourceClient : BaseClient, IResourceClient
 {
-    private readonly RestClient client;
-
-    public ResourceClient()
-    {
-        client = new RestClient(Endpoints.BaseUrl);
-        client.AddDefaultHeader(Endpoints.ApiKeyHeader, Endpoints.ApiKeyValue);
-    }
-
-    public void Dispose() => client.Dispose();
-
     // https://reqres.in/api/unknown
     public async Task<RestResponse> GetResources() => await client.ExecuteAsync(new RestRequest(Endpoints.Resources));
 

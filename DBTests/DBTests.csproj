@@ -18,14 +18,16 @@
 
     <!-- Project-specific packages -->
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.10" />
+    <PackageReference Include="MySql.Data" Version="9.4.0"/>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.7"/>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.7"/>
 
     <!-- Shared utilities for all tests -->
     <ProjectReference Include="../Shared/Shared.csproj" />
 
-    <!-- SQL script: copy to output -->
-    <None Update="game_accounts.sql">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <!-- Embedded SQL and config as resources  -->
+    <EmbeddedResource Include="Resources/game_accounts.sqlite.sql" />
+    <EmbeddedResource Include="Resources/appsettings.mysql.json" />
 
     <!-- Auto-generated global usings -->
     <Using Include="NUnit.Framework" />

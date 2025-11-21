@@ -26,10 +26,8 @@
     <!-- Shared utilities for all tests -->
     <ProjectReference Include="../Shared/Shared.csproj" />
 
-    <!-- Config: copy to output -->
-    <None Update="appsettings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <!-- Embedded config as resource -->
+    <EmbeddedResource Include="appsettings.json" />
 
     <!-- Auto-generated global usings -->
     <Using Include="NUnit.Framework" />
