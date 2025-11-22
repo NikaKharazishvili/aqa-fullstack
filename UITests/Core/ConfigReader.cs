@@ -5,7 +5,7 @@ namespace UiTests.Core;
 
 public static class ConfigReader
 {
-    private static readonly JsonElement Config;
+    static readonly JsonElement Config;
 
     static ConfigReader()
     {

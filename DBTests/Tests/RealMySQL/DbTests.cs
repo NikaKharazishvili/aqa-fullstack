@@ -9,14 +9,15 @@ namespace DbTests.Tests.RealMySQL;
 /// Real DB integration tests against an actual MySQL instance. Ignored by default for "clone & run".
 /// To run: 1. Remove [Ignore]. 2. Update embedded appsettings.mysql.json. 3. Start local MySQL + run game_accounts.mysql.sql. 4. dotnet test --filter "Category=RealMySQL".
 /// </summary>
-[TestFixture(Ignore = "")]
+[TestFixture]
+[Ignore("Requires a real local MySQL server to test")]
 [Category(INTEGRATION)]
 [Category(DB)]
 [Category("RealMySQL")]
 [Parallelizable(ParallelScope.Fixtures)]
 public class DatabaseTest
 {
-    private MySqlConnection? connection;
+    MySqlConnection _connection = null!;
 
     [OneTimeSetUp]
     public void Setup()
@@ -28,10 +29,10 @@ public class DatabaseTest
             .AddJsonStream(new MemoryStream(Encoding.UTF8.GetBytes(json)))
             .Build();
 
-        connection = new MySqlConnection(config.GetConnectionString("DefaultConnection"));
+        _connection = new MySqlConnection(config.GetConnectionString("DefaultConnection"));
         try
         {
-            connection.Open();
+            _connection.Open();
             TestContext.Progress.WriteLine("Database connection established successfully");
             Console.WriteLine("Database connection established successfully");
         }
@@ -39,7 +40,7 @@ public class DatabaseTest
     }
 
     [OneTimeTearDown]
-    public void Teardown() => connection?.Close();
+    public void Teardown() => _connection?.Close();
 
     [Test]
     public void TestRecordCount() => ExecuteQueryAndAssert(
@@ -80,9 +81,9 @@ public class DatabaseTest
             Assert.That(reader["email"], Is.EqualTo("shadowfang@mail.com"));
         });
 
-    private void ExecuteQueryAndAssert(string query, Action<MySqlDataReader> assertAction)
+    void ExecuteQueryAndAssert(string query, Action<MySqlDataReader> assertAction)
     {
-        using var cmd = new MySqlCommand(query, connection);
+        using var cmd = new MySqlCommand(query, _connection);
         using var reader = cmd.ExecuteReader();
         assertAction(reader);
     }

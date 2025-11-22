@@ -15,7 +15,7 @@ namespace ApiTests.Tests.Unit;
 [Parallelizable(ParallelScope.Fixtures)]
 public class UsersTests
 {
-    private Mock<IUserClient> _mockClient;
+    Mock<IUserClient> _mockClient;
 
     [SetUp] public void Setup() => _mockClient = new Mock<IUserClient>();
 
@@ -76,7 +76,7 @@ public class UsersTests
         var fakeResponse = new RestResponse { StatusCode = Created, Content = LoadEmbeddedText("Tests/Unit/TestData/CreateUser_Success.json") };
         _mockClient.Setup(c => c.CreateUser(It.IsAny<UserRequest>())).ReturnsAsync(fakeResponse);
 
-        var newUser = new UserRequest { name = "morpheus", job = "leader" };
+        var newUser = new UserRequest { Name = "morpheus", Job = "leader" };
 
         var response = await _mockClient.Object.CreateUser(newUser);
         var parsed = JObject.Parse(response.Content!);
@@ -96,7 +96,7 @@ public class UsersTests
         var fakeResponse = new RestResponse { StatusCode = OK, Content = LoadEmbeddedText("Tests/Unit/TestData/UpdateUser_Success.json") };
         _mockClient.Setup(c => c.UpdateUser(2, It.IsAny<UserRequest>())).ReturnsAsync(fakeResponse);
 
-        var updatedUser = new UserRequest { name = "morpheus", job = "zion resident" };
+        var updatedUser = new UserRequest { Name = "morpheus", Job = "zion resident" };
 
         var response = await _mockClient.Object.UpdateUser(2, updatedUser);
         var parsed = JObject.Parse(response.Content!);
@@ -114,7 +114,7 @@ public class UsersTests
     {
         var fakeResponse = new RestResponse { StatusCode = OK, Content = LoadEmbeddedText("Tests/Unit/TestData/UpdateUser_Success.json") };
         _mockClient.Setup(c => c.PatchUser(2, It.IsAny<UserRequest>())).ReturnsAsync(fakeResponse);
-        var patch = new UserRequest { job = "zion resident" };  // Partial
+        var patch = new UserRequest { Job = "zion resident" };  // Partial
         var response = await _mockClient.Object.PatchUser(2, patch);
         var parsed = JObject.Parse(response.Content!);
         Assert.Multiple(() =>

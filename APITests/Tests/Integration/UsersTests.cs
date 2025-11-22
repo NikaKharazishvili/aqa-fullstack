@@ -79,8 +79,8 @@ public class UsersTests
     {
         var newUser = new UserRequest
         {
-            name = "morpheus",
-            job = "leader"
+            Name = "morpheus",
+            Job = "leader"
         };
 
         using var client = new UserClient();
@@ -104,8 +104,8 @@ public class UsersTests
     {
         var updatedUser = new UserRequest
         {
-            name = "morpheus",
-            job = "zion resident"
+            Name = "morpheus",
+            Job = "zion resident"
         };
 
         using var client = new UserClient();
@@ -128,7 +128,7 @@ public class UsersTests
     {
         var updatedUser = new UserRequest
         {
-            name = "morpheus",
+            Name = "morpheus",
         };
 
         using var client = new UserClient();

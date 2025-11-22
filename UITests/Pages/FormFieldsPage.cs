@@ -5,15 +5,15 @@ namespace UiTests.Pages;
 
 public class FormFieldsPage : BasePage
 {
-    private IWebElement FormFieldsLink => Find("a[href*='form-fields']");
-    private IWebElement NameInput => Find("#name-input");
-    private IWebElement PasswordInput => Find("input[type='password']");
-    private List<IWebElement> FavouriteDrinks => FindMany("[name='fav_drink']");
-    private List<IWebElement> FavouriteColors => FindMany("[name='fav_color']");
-    private IWebElement AutomationQuestionDropdown => Find("#automation");
-    private IWebElement EmailInput => Find("#email");
-    private IWebElement MessageInput => Find("#message");
-    private IWebElement SubmitButton => Find("#submit-btn");
+    IWebElement FormFieldsLink => Find("a[href*='form-fields']");
+    IWebElement NameInput => Find("#name-input");
+    IWebElement PasswordInput => Find("input[type='password']");
+    List<IWebElement> FavouriteDrinks => FindMany("[name='fav_drink']");
+    List<IWebElement> FavouriteColors => FindMany("[name='fav_color']");
+    IWebElement AutomationQuestionDropdown => Find("#automation");
+    IWebElement EmailInput => Find("#email");
+    IWebElement MessageInput => Find("#message");
+    IWebElement SubmitButton => Find("#submit-btn");
 
     public void GoToFormFieldsPage() => FormFieldsLink.Click();
 

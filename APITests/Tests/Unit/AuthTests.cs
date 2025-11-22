@@ -15,7 +15,7 @@ namespace ApiTests.Tests.Unit;
 [Parallelizable(ParallelScope.Fixtures)]
 public class AuthTests
 {
-    private Mock<IAuthClient> _mockClient;
+    Mock<IAuthClient> _mockClient;
 
     [SetUp] public void Setup() => _mockClient = new Mock<IAuthClient>();
 
@@ -23,10 +23,10 @@ public class AuthTests
     [Description("Unit Test → Simulated POST /register returns 200 with token")]
     public async Task Register_ValidUser_ReturnsToken()
     {
-        var request = new AuthRequest { email = "eve.holt@reqres.in", password = "pistol" };
+        var request = new AuthRequest { Email = "eve.holt@reqres.in", Password = "pistol" };
         var fakeResponse = new RestResponse { StatusCode = OK, Content = LoadEmbeddedText("Tests/Unit/TestData/Register_Successful.json"), };
         _mockClient
-            .Setup(c => c.Register(It.Is<AuthRequest>(r => r.email == request.email && r.password == request.password)))
+            .Setup(c => c.Register(It.Is<AuthRequest>(r => r.Email == request.Email && r.Password == request.Password)))
             .ReturnsAsync(fakeResponse);
 
         var response = await _mockClient.Object.Register(request);
@@ -44,10 +44,10 @@ public class AuthTests
     [Description("Unit Test → Simulated POST /register with missing password returns 400")]
     public async Task Register_MissingPassword_ReturnsError()
     {
-        var request = new AuthRequest { email = "sydney@fife" };
+        var request = new AuthRequest { Email = "sydney@fife" };
         var fakeResponse = new RestResponse { StatusCode = BadRequest, Content = LoadEmbeddedText("Tests/Unit/TestData/Register_Unsuccessful.json"), };
         _mockClient
-            .Setup(c => c.Register(It.Is<AuthRequest>(r => r.email == request.email && string.IsNullOrEmpty(r.password))))
+            .Setup(c => c.Register(It.Is<AuthRequest>(r => r.Email == request.Email && string.IsNullOrEmpty(r.Password))))
             .ReturnsAsync(fakeResponse);
 
         var response = await _mockClient.Object.Register(request);
@@ -64,10 +64,10 @@ public class AuthTests
     [Description("Unit Test → Simulated POST /login returns 200 with token")]
     public async Task Login_ValidUser_ReturnsToken()
     {
-        var request = new AuthRequest { email = "eve.holt@reqres.in", password = "cityslicka" };
+        var request = new AuthRequest { Email = "eve.holt@reqres.in", Password = "cityslicka" };
         var fakeResponse = new RestResponse { StatusCode = OK, Content = LoadEmbeddedText("Tests/Unit/TestData/Register_Successful.json"), };
         _mockClient
-            .Setup(c => c.Login(It.Is<AuthRequest>(r => r.email == request.email && r.password == request.password)))
+            .Setup(c => c.Login(It.Is<AuthRequest>(r => r.Email == request.Email && r.Password == request.Password)))
             .ReturnsAsync(fakeResponse);
 
         var response = await _mockClient.Object.Login(request);
@@ -84,10 +84,10 @@ public class AuthTests
     [Description("Unit Test → Simulated POST /login with missing password returns 400")]
     public async Task Login_MissingPassword_ReturnsError()
     {
-        var request = new AuthRequest { email = "peter@klaven" };
+        var request = new AuthRequest { Email = "peter@klaven" };
         var fakeResponse = new RestResponse { StatusCode = BadRequest, Content = LoadEmbeddedText("Tests/Unit/TestData/Login_Unsuccessful.json"), };
         _mockClient
-            .Setup(c => c.Login(It.Is<AuthRequest>(r => r.email == request.email && string.IsNullOrEmpty(r.password))))
+            .Setup(c => c.Login(It.Is<AuthRequest>(r => r.Email == request.Email && string.IsNullOrEmpty(r.Password))))
             .ReturnsAsync(fakeResponse);
 
         var response = await _mockClient.Object.Login(request);

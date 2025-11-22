@@ -19,8 +19,8 @@ public class AuthTests
     {
         var authRequest = new AuthRequest
         {
-            email = "eve.holt@reqres.in",
-            password = "pistol"
+            Email = "eve.holt@reqres.in",
+            Password = "pistol"
         };
 
         using var client = new AuthClient();
@@ -43,7 +43,7 @@ public class AuthTests
     {
         var authRequest = new AuthRequest
         {
-            email = "sydney@fife"
+            Email = "sydney@fife"
         };
 
         using var client = new AuthClient();
@@ -64,8 +64,8 @@ public class AuthTests
     {
         var authRequest = new AuthRequest
         {
-            email = "eve.holt@reqres.in",
-            password = "cityslicka"
+            Email = "eve.holt@reqres.in",
+            Password = "cityslicka"
         };
 
         using var client = new AuthClient();
@@ -86,7 +86,7 @@ public class AuthTests
     {
         var authRequest = new AuthRequest
         {
-            email = "peter@klaven"
+            Email = "peter@klaven"
         };
 
 

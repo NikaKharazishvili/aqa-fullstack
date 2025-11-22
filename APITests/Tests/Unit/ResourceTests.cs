@@ -14,7 +14,7 @@ namespace ApiTests.Tests.Unit;
 [Parallelizable(ParallelScope.Fixtures)]
 public class ResourceTests
 {
-    private Mock<IResourceClient> _mockClient;
+    Mock<IResourceClient> _mockClient;
 
     [SetUp] public void Setup() => _mockClient = new Mock<IResourceClient>();
 
