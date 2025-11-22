@@ -12,16 +12,14 @@
 ## Key Features:
 - Clean architecture (interface-based clients, DTOs, POM)
 - Parallel execution (all fixtures + safe UI concurrency via `[LevelOfParallelism(4)]`)
-- Zero setup (WebDriverManager auto-downloads drivers, in-memory DB, embedded JSON fixtures)
-- Fully portable (clone & run)
+- Cross-platform compatible (WebDriverManager auto-downloads drivers, in-memory DB, embedded JSON fixtures)
+- Zero setup & CI/CD-ready (true clone & run — no external dependencies)
 
 ---
 
 ## Project Structure:
 - **ApiTests/**: RestSharp clients for `reqres.in` API. Covers full CRUD, auth, delays. Unit tests use Moq + embedded JSON mocks for isolation.
-- **DbTests/**: Data integrity checks on a sample "game_accounts" DB.
-  - In-memory SQLite (default: fast, no setup, runs everywhere).
-  - Real MySQL (ignored by default: production-like, requires local server + config tweaks to run).
+- **DbTests/**: Data integrity tests on a sample "game_accounts" DB using in-memory SQLite (default) + optional real MySQL (ignored by default).
 - **UiTests/**: Selenium POM for `practice-automation.com`. Config-driven (embedded appsettings.json) for browser/headless/data.
 - **Shared/**: Common utils
 
