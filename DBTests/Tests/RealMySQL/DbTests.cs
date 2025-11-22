@@ -5,9 +5,14 @@ using static Shared.Utils;
 
 namespace DbTests.Tests.RealMySQL;
 
-[TestFixture(Ignore = "Requires local MySQL server – real-world example only")]
+/// <summary>
+/// Real DB integration tests against an actual MySQL instance. Ignored by default for "clone & run".
+/// To run: 1. Remove [Ignore]. 2. Update embedded appsettings.mysql.json. 3. Start local MySQL + run game_accounts.mysql.sql. 4. dotnet test --filter "Category=RealMySQL".
+/// </summary>
+[TestFixture(Ignore = "Requires local MySQL server")]
 [Category(INTEGRATION)]
 [Category(DB)]
+[Category("RealMySQL")]
 [Parallelizable(ParallelScope.Fixtures)]
 public class DatabaseTest
 {

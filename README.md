@@ -18,11 +18,12 @@
 ---
 
 ## Project Structure:
-- aqa-fullstack/
-- ├── ApiTests/        → RestSharp + full CRUD/auth + Moq unit tests (reqres.in)
-- ├── DbTests/         → In-memory SQLite tests + disabled real MySQL example
-- ├── UiTests/         → Selenium + POM + config-driven data (practice-automation.com)
-- └── Shared/Utils.cs
+- **ApiTests/**: RestSharp clients for `reqres.in` API. Covers full CRUD, auth, delays. Unit tests use Moq + embedded JSON mocks for isolation.
+- **DbTests/**: Data integrity checks on a sample "game_accounts" DB.
+  - In-memory SQLite (default: fast, no setup, runs everywhere).
+  - Real MySQL (ignored by default: production-like, requires local server + config tweaks to run).
+- **UiTests/**: Selenium POM for `practice-automation.com`. Config-driven (embedded appsettings.json) for browser/headless/data.
+- **Shared/**: Common utils
 
 ---
 
