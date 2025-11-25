@@ -26,11 +26,11 @@ public class FormFieldsPage : BasePage
         // Select favourite drink by value
         var selectedFavDrink = FavouriteDrinks.FirstOrDefault(d => d.GetAttribute("value") == favDrink);
         if (selectedFavDrink == null) throw new Exception($"Drink not found: {favDrink}");
-        HoverAndClick(selectedFavDrink);
+        selectedFavDrink.Click();;
 
         // Select favourite color by index (0-4)
         if (favColorIndex < 0 || favColorIndex >= FavouriteColors.Count) throw new ArgumentOutOfRangeException(nameof(favColorIndex), "Invalid color index");
-        HoverAndClick(FavouriteColors[favColorIndex]);
+        FavouriteColors[favColorIndex].Click();
 
         // Dropdown by visible text
         new SelectElement(AutomationQuestionDropdown).SelectByText(doYouLikeAutomation);

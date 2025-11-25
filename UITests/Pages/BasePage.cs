@@ -25,10 +25,14 @@ public class BasePage
 
     protected void HoverAndClick(IWebElement element)
     {
-        ((IJavaScriptExecutor)Driver).ExecuteScript("arguments[0].scrollIntoView({block: 'center', inline: 'center'});", element);  // JS scroll = 100% reliable
-        Wait(0.2f);  // Small delay for Firefox (Firefox sometimes ignores instant hover)
-        // Actions.MoveToElement(element).Click().Perform();
-        element.Click();
+        try
+        {
+            element.Click();
+        }
+        catch (ElementClickInterceptedException)
+        {
+            ((IJavaScriptExecutor)Driver).ExecuteScript("arguments[0].click();", element);
+        }
     }
 
     public string GetHeaderText() => Find("h1[itemprop='headline']").Text;  // Check header of the current page to verify we are on the right page

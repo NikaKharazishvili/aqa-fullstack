@@ -10,7 +10,7 @@ namespace UiTests.Tests;
 [TestFixture]
 [Category(INTEGRATION)]
 [Category(UI)]
-[Parallelizable(ParallelScope.Fixtures)]
+[Parallelizable(ParallelScope.Self)]
 public abstract class BaseTest
 {
     [OneTimeSetUp]

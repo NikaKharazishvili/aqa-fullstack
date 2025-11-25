@@ -7,7 +7,7 @@ namespace UiTests.Tests;
 [TestFixture]
 [Category(INTEGRATION)]
 [Category(UI)]
-[Parallelizable(ParallelScope.Children)]
+[Parallelizable(ParallelScope.Self)]
 public class FormFieldsTest : BaseTest
 {
     FormFieldsPage formFieldsPage;
