@@ -1,7 +1,7 @@
 using UiTests.Pages;
 using static Shared.Utils;
 
-namespace UiTests.Tests;
+namespace UiTests.Tests.Integration;
 
 /// <summary>Tests the Gestures page.</summary>
 [TestFixture]
@@ -15,7 +15,7 @@ public class GesturesTest : BaseTest
     [OneTimeSetUp]
     public void PageSetup()
     {
-        gesturesPage = new GesturesPage();
+        gesturesPage = new();
         gesturesPage.GoToGesturesPage();
     }
 

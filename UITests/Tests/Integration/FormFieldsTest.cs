@@ -2,8 +2,9 @@
 using UiTests.Core;
 using static Shared.Utils;
 
-namespace UiTests.Tests;
+namespace UiTests.Tests.Integration;
 
+/// <summary>Tests the Form Fields page.</summary>
 [TestFixture]
 [Category(INTEGRATION)]
 [Category(UI)]
@@ -15,7 +16,7 @@ public class FormFieldsTest : BaseTest
     [OneTimeSetUp]
     public void PageSetup()
     {
-        formFieldsPage = new FormFieldsPage();
+        formFieldsPage = new();
         formFieldsPage.GoToFormFieldsPage();
     }
 

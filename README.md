@@ -18,9 +18,9 @@
 ---
 
 ## Project Structure:
-- **ApiTests/**: RestSharp clients for `reqres.in` API. Covers full CRUD, auth, delays. Unit tests use Moq + embedded JSON mocks for isolation.
-- **DbTests/**: Data integrity tests on a sample "game_accounts" DB using in-memory SQLite (default) + optional real MySQL (ignored by default).
-- **UiTests/**: Selenium POM for `practice-automation.com`. Config-driven (embedded appsettings.json) for browser/headless/data.
+- **ApiTests/**: RestSharp clients for `reqres.in` API. Covers full CRUD, auth, delays. Unit tests use Moq + embedded JSON mocks for isolation
+- **DbTests/**: Data integrity tests on a sample "game_accounts" DB using in-memory SQLite (default) + optional real MySQL (ignored by default)
+- **UiTests/**: Selenium POM for `practice-automation.com`. Config-driven (embedded appsettings.json) for browser/headless/data
 - **Shared/**: Common utils
 
 ---
@@ -28,7 +28,7 @@
 ## Run Tests
 ```bash
 dotnet test                                  # Everything in parallel
-dotnet test --filter "Category=Integration"  # Real API + DB + UI calls
+dotnet test --filter "Category=Integration"  # UI + API + DB calls
 dotnet test --filter "Category=Unit"         # Pure API unit(Moq) tests
 dotnet test --filter "Category=Smoke"        # Quick API health check
 dotnet test --filter "Category=Api|Ui|Db"    # By layer

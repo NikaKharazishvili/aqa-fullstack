@@ -3,6 +3,7 @@ using OpenQA.Selenium.Support.UI;
 
 namespace UiTests.Pages;
 
+/// <summary>Page Object for the FormFields page. Provides methods to navigate the page and fill forms.</summary>
 public class FormFieldsPage : BasePage
 {
     IWebElement FormFieldsLink => Find("a[href*='form-fields']");
@@ -15,7 +16,7 @@ public class FormFieldsPage : BasePage
     IWebElement MessageInput => Find("#message");
     IWebElement SubmitButton => Find("#submit-btn");
 
-    public void GoToFormFieldsPage() => FormFieldsLink.Click();
+    public void GoToFormFieldsPage() => HoverAndClick(FormFieldsLink);
 
     public FormFieldsPage FillForm(string name, string password, string favDrink, int favColorIndex, string doYouLikeAutomation, string email, string message)
     {

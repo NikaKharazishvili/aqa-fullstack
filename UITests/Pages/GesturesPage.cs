@@ -3,12 +3,12 @@ using OpenQA.Selenium.Interactions;
 
 namespace UiTests.Pages;
 
-/// <summary>Page Object for the Gestures page. Provides methods to navigate the page and perform gesture actions.</summary>
+/// <summary>Page Object for the Gestures page. Provides methods to navigate the page and perform gestures actions.</summary>
 public class GesturesPage : BasePage
 {
     IWebElement GesturesLink => Find("a[href*='gestures/']");
     IWebElement BoxHeader => Find("#moveMeHeader");
-    IWebElement Image => Find("#dragme");
+    IWebElement Image => Find("#dragMe");
     IWebElement ImagePlaceToMove => Find("#div2");
 
     public void GoToGesturesPage() => HoverAndClick(GesturesLink);
@@ -22,9 +22,9 @@ public class GesturesPage : BasePage
         return this;
     }
 
-    public GesturesPage DragAndDropImage()
+    public GesturesPage DragAndDropImage()  // JS code is more reliable
     {
-        ((IJavaScriptExecutor)Driver).ExecuteScript("document.getElementById('div2').appendChild(document.getElementById('dragMe'));");
+        ((IJavaScriptExecutor)Driver).ExecuteScript("arguments[1].appendChild(arguments[0]);", Image, ImagePlaceToMove);
         return this;
     }
 }

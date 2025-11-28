@@ -9,6 +9,4 @@ public static class DriverManager
     public static IWebDriver GetDriver() => _driver.Value ?? throw new InvalidOperationException("Driver not initialized! Are you in a test?");
 
     public static void SetDriver(IWebDriver? driver) => _driver.Value = driver;
-
-    public static void QuitDriver() => _driver.Value?.Quit();
 }

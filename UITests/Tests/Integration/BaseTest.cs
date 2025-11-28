@@ -7,32 +7,35 @@ using static Shared.Utils;
 
 namespace UiTests.Tests;
 
+/// <summary>Base class for all Page Objects with shared utilities like waits and alerts.</summary>
 [TestFixture]
 [Category(INTEGRATION)]
 [Category(UI)]
 [Parallelizable(ParallelScope.Self)]
 public abstract class BaseTest
 {
+    IWebDriver? _driver;
+
     [OneTimeSetUp]
     public void Setup()
     {
         var browser = ConfigReader.Get<string>("Browser").ToLowerInvariant();
         var headless = ConfigReader.Get<bool>("Headless");
 
-        var driver = browser switch
+        _driver = browser switch
         {
             "chrome" => CreateChrome(headless),
             "firefox" => CreateFirefox(headless),
             _ => throw new NotSupportedException($"Browser {browser} not supported")
         };
 
-        DriverManager.SetDriver(driver);
-        if (!headless) driver.Manage().Window.Maximize();
-        driver.Navigate().GoToUrl(ConfigReader.Get<string>("Url"));
+        DriverManager.SetDriver(_driver);
+        if (!headless) _driver.Manage().Window.Maximize();
+        _driver.Navigate().GoToUrl(ConfigReader.Get<string>("Url"));
     }
 
     [OneTimeTearDown]  // Quit driver after all tests are done
-    public void TearDown() => DriverManager.QuitDriver();
+    public void TearDown() => _driver?.Quit();
 
     IWebDriver CreateChrome(bool headless)
     {
