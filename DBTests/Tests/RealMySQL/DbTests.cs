@@ -15,7 +15,7 @@ namespace DbTests.Tests.RealMySQL;
 [Category(DB)]
 [Category("RealMySQL")]
 [Parallelizable(ParallelScope.Fixtures)]
-public class DatabaseTest
+public class DbTests
 {
     MySqlConnection _connection = null!;
 
@@ -40,7 +40,7 @@ public class DatabaseTest
     }
 
     [OneTimeTearDown]
-    public void Teardown() => _connection?.Close();
+    public void TearDown() => _connection?.Close();
 
     [Test]
     public void TestRecordCount() => ExecuteQueryAndAssert(

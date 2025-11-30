@@ -3,7 +3,7 @@ using OpenQA.Selenium.Interactions;
 
 namespace UiTests.Pages;
 
-/// <summary>Page Object for the Hover page.Handles navigation and hover interaction for verifying dynamic text changes.</summary>
+/// <summary>Page Object for the Hover page. Handles navigation and hover interaction.</summary>
 public class HoverPage : BasePage
 {
     IWebElement HoverLink => Find("a[href*='hover/']");
@@ -11,7 +11,7 @@ public class HoverPage : BasePage
 
     public void GoToHoverPage() => HoverAndClick(HoverLink);
 
-    public String GetHoverText() => ElementToHover.Text;
+    public string GetHoverText() => ElementToHover.Text;
 
     public void HoverOverElement() => Actions.MoveToElement(ElementToHover).Perform();
 }

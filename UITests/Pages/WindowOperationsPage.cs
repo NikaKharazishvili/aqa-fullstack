@@ -42,7 +42,7 @@ public class WindowOperationsPage : BasePage
         string originalWindow = Driver.CurrentWindowHandle;
         NewWindow.Click();
 
-        // Wait until a new window appears
+        // Wait for new window to appear
         var windowHandles = Driver.WindowHandles;
         while (windowHandles.Count == 1)
         {

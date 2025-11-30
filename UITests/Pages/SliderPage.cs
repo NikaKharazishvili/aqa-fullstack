@@ -10,7 +10,6 @@ public class SliderPage : BasePage
 
     public void GoToSliderPage() => HoverAndClick(SliderLink);
 
-    // Set slider value using JavaScript and trigger an input event
     public void MoveSlider(int targetValue) => ((IJavaScriptExecutor)Driver).ExecuteScript("arguments[0].value=arguments[1]; arguments[0].dispatchEvent(new Event('input'))", Slider, targetValue);
 
     public int GetSliderValue() => int.TryParse(Slider.GetDomProperty("value"), out int result) ? result : 0;

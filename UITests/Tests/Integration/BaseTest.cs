@@ -7,7 +7,7 @@ using static Shared.Utils;
 
 namespace UiTests.Tests;
 
-/// <summary>Base class for all Page Objects with shared utilities like waits and alerts.</summary>
+/// <summary>Base class for all UI tests with driver setup and teardown.</summary>
 [TestFixture]
 [Category(INTEGRATION)]
 [Category(UI)]
@@ -35,11 +35,16 @@ public abstract class BaseTest
     }
 
     [OneTimeTearDown]  // Quit driver after all tests are done
-    public void TearDown() => _driver?.Quit();
+    public void TearDown()
+    {
+        _driver?.Quit();
+        _driver?.Dispose();
+        DriverManager.SetDriver(null);
+    }
 
     IWebDriver CreateChrome(bool headless)
     {
-        // Auto-downloads matching ChromeDriver to avoid version conflicts. Ensures tests run on any PC/CI environment without manual driver setup
+        // Auto-downloads matching ChromeDriver for current Chrome version
         new WebDriverManager.DriverManager().SetUpDriver(new ChromeConfig());
 
         var options = new ChromeOptions();
@@ -53,7 +58,7 @@ public abstract class BaseTest
 
     IWebDriver CreateFirefox(bool headless)
     {
-        // Auto-downloads matching ChromeDriver to avoid version conflicts. Ensures tests run on any PC/CI environment without manual driver setup
+        // Auto-downloads matching GeckoDriver for current Firefox version
         new WebDriverManager.DriverManager().SetUpDriver(new FirefoxConfig());
 
         var options = new FirefoxOptions();

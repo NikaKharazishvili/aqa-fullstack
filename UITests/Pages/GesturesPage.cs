@@ -22,8 +22,9 @@ public class GesturesPage : BasePage
         return this;
     }
 
-    public GesturesPage DragAndDropImage()  // JS code is more reliable
+    public GesturesPage DragAndDropImage()
     {
+        // JS code is more reliable
         ((IJavaScriptExecutor)Driver).ExecuteScript("arguments[1].appendChild(arguments[0]);", Image, ImagePlaceToMove);
         return this;
     }

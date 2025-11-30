@@ -2,7 +2,7 @@ using OpenQA.Selenium;
 
 namespace UiTests.Pages;
 
-/// <summary>Page Object for the Modals page.Provides methods to navigate the page and interact with modals.</summary>
+/// <summary>Page Object for the Modals page. Provides methods to interact with modals.</summary>
 public class ModalsPage : BasePage
 {
     IWebElement ModalsLink => Find("a[href*='modals/']");

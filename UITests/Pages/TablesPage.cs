@@ -15,7 +15,7 @@ public class TablesPage : BasePage
     {
         var displayedMap = new Dictionary<string, string>();
 
-        for (int i = 1; i < Items.Count; i++)  // skip index 0 (header)
+        for (int i = 1; i < Items.Count; i++)  // Skip header row
         {
             string item = Items[i].Text.Trim();
             string price = Prices[i].Text.Trim();

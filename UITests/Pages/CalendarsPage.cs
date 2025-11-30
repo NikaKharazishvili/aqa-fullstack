@@ -13,11 +13,10 @@ public class CalendarsPage : BasePage
     public void SetDate(int year, int month, int day)
     {
         // Format the date correctly (YYYY-MM-DD)
-        String date = year + "-" + month + "-" + day;
-
-        // Set the date value using JavaScript and trigger an input event
+        string date = $"{year}-{month}-{day}";
+        
         ((IJavaScriptExecutor)Driver).ExecuteScript("arguments[0].value=arguments[1]; arguments[0].dispatchEvent(new Event('input'))", DatePicker, date);
     }
 
-    public String? GetDate() => DatePicker.GetDomProperty("value");
+    public string? GetDate() => DatePicker.GetDomProperty("value");
 }

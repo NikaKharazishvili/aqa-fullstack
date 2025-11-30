@@ -23,7 +23,7 @@ public class CalendarsTest : BaseTest
     public void VerifyHeaderText() => Assert.That(calendarsPage.GetHeaderText(), Is.EqualTo("Calendars"));
 
     [Test]
-    public void VerifyDateSeleciton()
+    public void VerifyDateSelection()
     {
         int year = 2000, month = 12, day = 12;
         calendarsPage.SetDate(year, month, day);

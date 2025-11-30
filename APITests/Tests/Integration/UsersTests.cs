@@ -15,7 +15,7 @@ public class UsersTests
 {
     [Test]
     [Description("GET /users?page=2 → returns 200 and correct page data")]
-    public async Task GetListUsers_Page2_Returns6User()
+    public async Task GetListUsers_Page2_Returns6Users()
     {
         using var client = new UserClient();
         var response = await client.GetUsers(2);

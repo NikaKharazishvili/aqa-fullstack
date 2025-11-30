@@ -67,7 +67,7 @@ public class BasePage
         return Driver.SwitchTo().Alert().Text ?? string.Empty;
     }
 
-    public void SendTextToAlert(String text)
+    public void SendTextToAlert(string text)
     {
         Wait.Until(ExpectedConditions.AlertIsPresent());
         Driver.SwitchTo().Alert().SendKeys(text);
