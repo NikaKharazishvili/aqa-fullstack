@@ -7,7 +7,7 @@ namespace DbTests.Tests.RealMySQL;
 
 /// <summary>
 /// Real DB integration tests against an actual MySQL instance. Ignored by default for "clone & run".
-/// To run: 1. Remove [Ignore]. 2. Update embedded appsettings.mysql.json. 3. Start local MySQL + run game_accounts.mysql.sql. 4. dotnet test --filter "Category=RealMySQL".
+/// To run: 1. Remove [Ignore]. 2. Update embedded appsettings.mysql.json as needed. 3. Start local MySQL + run game_accounts.mysql.sql. 4. dotnet test --filter "Category=RealMySQL".
 /// </summary>
 [TestFixture]
 [Ignore("Requires a real local MySQL server to test")]
@@ -41,6 +41,13 @@ public class DbTests
 
     [OneTimeTearDown]
     public void TearDown() => _connection?.Close();
+
+    void ExecuteQueryAndAssert(string query, Action<MySqlDataReader> assertAction)
+    {
+        using var cmd = new MySqlCommand(query, _connection);
+        using var reader = cmd.ExecuteReader();
+        assertAction(reader);
+    }
 
     [Test]
     public void TestRecordCount() => ExecuteQueryAndAssert(
@@ -80,11 +87,4 @@ public class DbTests
             Assert.That(reader["password"], Is.EqualTo("DragonSlayer"));
             Assert.That(reader["email"], Is.EqualTo("shadowfang@mail.com"));
         });
-
-    void ExecuteQueryAndAssert(string query, Action<MySqlDataReader> assertAction)
-    {
-        using var cmd = new MySqlCommand(query, _connection);
-        using var reader = cmd.ExecuteReader();
-        assertAction(reader);
-    }
 }

@@ -15,22 +15,22 @@ namespace UiTests.Tests;
 public abstract class BaseTest
 {
     IWebDriver? _driver;
+    string _browser = ConfigReader.Get<string>("Browser").ToLowerInvariant();
+    bool _headless = ConfigReader.Get<bool>("Headless");
 
     [OneTimeSetUp]
     public void Setup()
     {
-        var browser = ConfigReader.Get<string>("Browser").ToLowerInvariant();
-        var headless = ConfigReader.Get<bool>("Headless");
 
-        _driver = browser switch
+        _driver = _browser switch
         {
-            "chrome" => CreateChrome(headless),
-            "firefox" => CreateFirefox(headless),
-            _ => throw new NotSupportedException($"Browser {browser} not supported")
+            "chrome" => CreateChrome(),
+            "firefox" => CreateFirefox(),
+            _ => throw new NotSupportedException($"Browser {_browser} not supported")
         };
 
         DriverManager.SetDriver(_driver);
-        if (!headless) _driver.Manage().Window.Maximize();
+        if (!_headless) _driver.Manage().Window.Maximize();
         _driver.Navigate().GoToUrl(ConfigReader.Get<string>("Url"));
     }
 
@@ -42,13 +42,13 @@ public abstract class BaseTest
         DriverManager.SetDriver(null);
     }
 
-    IWebDriver CreateChrome(bool headless)
+    IWebDriver CreateChrome()
     {
         // Auto-downloads matching ChromeDriver for current Chrome version
         new WebDriverManager.DriverManager().SetUpDriver(new ChromeConfig());
 
         var options = new ChromeOptions();
-        if (headless)
+        if (_headless)
         {
             options.AddArgument("--headless=new");
             options.AddArgument("--window-size=1920,1080");
@@ -56,13 +56,13 @@ public abstract class BaseTest
         return new ChromeDriver(options);
     }
 
-    IWebDriver CreateFirefox(bool headless)
+    IWebDriver CreateFirefox()
     {
         // Auto-downloads matching GeckoDriver for current Firefox version
         new WebDriverManager.DriverManager().SetUpDriver(new FirefoxConfig());
 
         var options = new FirefoxOptions();
-        if (headless)
+        if (_headless)
         {
             options.AddArgument("--headless");
             options.AddArgument("--width=1920");

@@ -32,11 +32,7 @@ public class DbTests
     }
 
     [OneTimeTearDown]
-    public void TearDown()
-    {
-        _connection?.Close();
-        _connection?.Dispose();
-    }
+    public void TearDown() => _connection?.Close();
 
     void ExecuteQueryAndAssert(string query, Action<SqliteDataReader> assertAction)
     {
