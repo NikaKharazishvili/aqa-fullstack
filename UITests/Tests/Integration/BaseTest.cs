@@ -2,7 +2,7 @@
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using UiTests.Core;
-using WebDriverManager.DriverConfigs.Impl;
+// using WebDriverManager.DriverConfigs.Impl;
 using static Shared.Utils;
 
 namespace UiTests.Tests;
@@ -44,9 +44,6 @@ public abstract class BaseTest
 
     IWebDriver CreateChrome()
     {
-        // Auto-downloads matching ChromeDriver for current Chrome version
-        new WebDriverManager.DriverManager().SetUpDriver(new ChromeConfig());
-
         var options = new ChromeOptions();
         if (_headless)
         {
@@ -58,9 +55,6 @@ public abstract class BaseTest
 
     IWebDriver CreateFirefox()
     {
-        // Auto-downloads matching GeckoDriver for current Firefox version
-        new WebDriverManager.DriverManager().SetUpDriver(new FirefoxConfig());
-
         var options = new FirefoxOptions();
         if (_headless)
         {

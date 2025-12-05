@@ -19,7 +19,6 @@
     <!-- Project-specific packages -->
     <PackageReference Include="Selenium.Support" Version="4.38.0" />
     <PackageReference Include="SeleniumExtras.WaitHelpers" Version="1.0.2" />
-    <PackageReference Include="WebDriverManager" Version="2.17.6" />
 
     <!-- Shared utilities for all tests -->
     <ProjectReference Include="../Shared/Shared.csproj" />

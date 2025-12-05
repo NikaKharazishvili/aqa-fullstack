@@ -12,7 +12,7 @@
 ## Key Features:
 - Clean architecture (interface-based clients, DTOs, POM)
 - Parallel execution (all fixtures + safe UI concurrency via `[LevelOfParallelism(4)]`)
-- Cross-platform compatible (WebDriverManager auto-downloads drivers, in-memory DB, embedded JSON fixtures)
+- Cross-platform compatible (auto-downloads drivers, in-memory DB, embedded JSON fixtures)
 - Zero setup & CI/CD-ready (true clone & run — no external dependencies)
 
 ---
