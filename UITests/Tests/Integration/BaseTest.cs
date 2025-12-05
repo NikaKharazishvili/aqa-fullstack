@@ -2,7 +2,6 @@
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using UiTests.Core;
-// using WebDriverManager.DriverConfigs.Impl;
 using static Shared.Utils;
 
 namespace UiTests.Tests;
