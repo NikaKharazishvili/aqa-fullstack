@@ -20,7 +20,6 @@ public class BasePage
     }
 
     public IWebElement Find(string css) => Wait.Until(ExpectedConditions.ElementToBeClickable(By.CssSelector(css)));
-    public IWebElement FindVisible(string css) => Wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector(css)));
     public List<IWebElement> FindMany(string css) => Driver.FindElements(By.CssSelector(css)).ToList();
 
     protected void HoverAndClick(IWebElement element)
@@ -49,27 +48,9 @@ public class BasePage
             catch (NoSuchElementException) { return false; }
         });
 
-    public void AcceptAlert()
+    public IAlert GetAlert()
     {
         Wait.Until(ExpectedConditions.AlertIsPresent());
-        Driver.SwitchTo().Alert().Accept();
-    }
-
-    public void DismissAlert()
-    {
-        Wait.Until(ExpectedConditions.AlertIsPresent());
-        Driver.SwitchTo().Alert().Dismiss();
-    }
-
-    public string GetAlertText()
-    {
-        Wait.Until(ExpectedConditions.AlertIsPresent());
-        return Driver.SwitchTo().Alert().Text ?? string.Empty;
-    }
-
-    public void SendTextToAlert(string text)
-    {
-        Wait.Until(ExpectedConditions.AlertIsPresent());
-        Driver.SwitchTo().Alert().SendKeys(text);
+        return Driver.SwitchTo().Alert();
     }
 }

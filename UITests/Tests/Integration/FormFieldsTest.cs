@@ -36,6 +36,6 @@ public class FormFieldsTest : BaseTest
             ConfigReader.Get<string>("Email"),
             ConfigReader.Get<string>("Message"))
         .HoverAndClickSubmit()
-        .AcceptAlert();
+        .GetAlert().Accept();
     }
 }

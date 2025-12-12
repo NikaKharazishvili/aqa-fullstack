@@ -26,8 +26,8 @@ public class PopupsTest : BaseTest
     public void TestAlertPopup()
     {
         popupsPage.ClickAlertPopup();
-        Assert.That(popupsPage.GetAlertText(), Is.EqualTo("Hi there, pal!"));
-        popupsPage.AcceptAlert();
+        Assert.That(popupsPage.GetAlert().Text, Is.EqualTo("Hi there, pal!"));
+        popupsPage.GetAlert().Accept();
     }
 
     [Test]
@@ -35,14 +35,14 @@ public class PopupsTest : BaseTest
     {
         // Accept scenario
         popupsPage.ClickConfirmPopup();
-        Assert.That(popupsPage.GetAlertText(), Is.EqualTo("OK or Cancel, which will it be?"));
-        popupsPage.AcceptAlert();
+        Assert.That(popupsPage.GetAlert().Text, Is.EqualTo("OK or Cancel, which will it be?"));
+        popupsPage.GetAlert().Accept();
         Assert.That(popupsPage.GetConfirmPopupText(), Is.EqualTo("OK it is!"));
 
         // Dismiss scenario
         popupsPage.ClickConfirmPopup();
-        Assert.That(popupsPage.GetAlertText(), Is.EqualTo("OK or Cancel, which will it be?"));
-        popupsPage.DismissAlert();
+        Assert.That(popupsPage.GetAlert().Text, Is.EqualTo("OK or Cancel, which will it be?"));
+        popupsPage.GetAlert().Dismiss();
         Assert.That(popupsPage.GetConfirmPopupText(), Is.EqualTo("Cancel it is!"));
     }
 
@@ -51,15 +51,15 @@ public class PopupsTest : BaseTest
     {
         // Accept with input
         popupsPage.ClickPromptPopup();
-        Assert.That(popupsPage.GetAlertText(), Is.EqualTo("Hi there, what's your name?"));
-        popupsPage.SendTextToAlert("Aham Brahmasmi");
-        popupsPage.AcceptAlert();
+        Assert.That(popupsPage.GetAlert().Text, Is.EqualTo("Hi there, what's your name?"));
+        popupsPage.GetAlert().SendKeys("Aham Brahmasmi");
+        popupsPage.GetAlert().Accept();
         Assert.That(popupsPage.GetPromptPopupText(), Is.EqualTo("Nice to meet you, Aham Brahmasmi!"));
 
         // Dismiss without input
         popupsPage.ClickPromptPopup();
-        Assert.That(popupsPage.GetAlertText(), Is.EqualTo("Hi there, what's your name?"));
-        popupsPage.DismissAlert();
+        Assert.That(popupsPage.GetAlert().Text, Is.EqualTo("Hi there, what's your name?"));
+        popupsPage.GetAlert().Dismiss();
         Assert.That(popupsPage.GetPromptPopupText(), Is.EqualTo("Fine, be that way..."));
     }
 }

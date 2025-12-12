@@ -33,3 +33,6 @@ dotnet test --filter "Category=Unit"         # Pure API unit(Moq) tests
 dotnet test --filter "Category=Smoke"        # Quick API health check
 dotnet test --filter "Category=Api|Ui|Db"    # By layer
 ```
+
+## Important Note
+The `ApiTests` currently fail because the `reqres.in` endpoints now require CAPTCHA verification for all requests. This prevents automated test execution.
