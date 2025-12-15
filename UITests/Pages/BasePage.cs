@@ -1,7 +1,6 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
-using SeleniumExtras.WaitHelpers;
 using UiTests.Core;
 
 namespace UiTests.Pages;
@@ -19,38 +18,36 @@ public class BasePage
         Actions = new Actions(Driver);
     }
 
-    public IWebElement Find(string css) => Wait.Until(ExpectedConditions.ElementToBeClickable(By.CssSelector(css)));
+    public IWebElement Find(string css) =>
+    Wait.Until(driver =>
+    {
+        try
+        {
+            var e = driver.FindElement(By.CssSelector(css));
+            return (e.Displayed && e.Enabled) ? e : null;
+        }
+        catch (NoSuchElementException) { return null; }
+        catch (StaleElementReferenceException) { return null; }
+    });
+
     public List<IWebElement> FindMany(string css) => Driver.FindElements(By.CssSelector(css)).ToList();
 
-    protected void HoverAndClick(IWebElement element)
+    public void HoverAndClick(IWebElement e)
     {
-        try { element.Click(); }
-        catch (ElementClickInterceptedException) { ((IJavaScriptExecutor)Driver).ExecuteScript("arguments[0].click();", element); }
+        try { e.Click(); }
+        catch (ElementClickInterceptedException) { ((IJavaScriptExecutor)Driver).ExecuteScript("arguments[0].click();", e); }
     }
 
-    public string GetHeaderText() => Find("h1[itemprop='headline']").Text;  // Check header of the current page to verify we are on the right page
-
-    public void WaitForTextToBe(IWebElement element, string text) => Wait.Until(ExpectedConditions.TextToBePresentInElement(element, text));
-
-    public void WaitForElementNotVisible(IWebElement element) =>
-        Wait.Until(driver =>
-        {
-            try { return !element.Displayed; }
-            catch (StaleElementReferenceException) { return true; }
-            catch (NoSuchElementException) { return true; }
-        });
-
-    public void WaitForElementVisible(IWebElement element) =>
-        Wait.Until(driver =>
-        {
-            try { return element.Displayed; }
-            catch (StaleElementReferenceException) { return false; }
-            catch (NoSuchElementException) { return false; }
-        });
-
-    public IAlert GetAlert()
+    public IAlert GetAlert() =>
+    Wait.Until(driver =>
     {
-        Wait.Until(ExpectedConditions.AlertIsPresent());
-        return Driver.SwitchTo().Alert();
-    }
+        try { return driver.SwitchTo().Alert(); }
+        catch (NoAlertPresentException) { return null; }
+    });
+
+    public string GetHeaderText() => Find("h1[itemprop='headline']").Text; // Check header of the current page to verify we are on the right page
+
+    public void WaitForTextToBe(IWebElement e, string text) => Wait.Until(_ => e.Text.Contains(text));
+    public void WaitForElementVisible(IWebElement e) => Wait.Until(_ => e.Displayed);
+    public void WaitForElementNotVisible(IWebElement e) => Wait.Until(_ => !e.Displayed);
 }
