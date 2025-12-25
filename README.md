@@ -35,4 +35,6 @@ dotnet test --filter "Category=Api|Ui|Db"    # By layer
 ```
 
 ## Important Note
-The `ApiTests` currently fail because the `reqres.in` endpoints now require CAPTCHA verification for all requests. This prevents automated test execution.
+The suite is complete and functional; failures occur due to protections added to public test environments after development, not implementation issues.
+• `ApiTests` worked previously, but `reqres.in` now enforces CAPTCHA, blocking automation.
+• `UiTests` were stable, but the demo site intermittently returns "Too Many Requests".
