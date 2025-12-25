@@ -20,11 +20,7 @@ public class BasePage
 
     public IWebElement Find(string css) => Wait.Until(_ =>
     {
-        try
-        {
-            var element = Driver.FindElement(By.CssSelector(css));
-            return (element.Displayed && element.Enabled) ? element : null;
-        }
+        try { return Driver.FindElement(By.CssSelector(css)) is IWebElement element && element.Displayed && element.Enabled ? element : null; }
         catch (NoSuchElementException) { return null; }
         catch (StaleElementReferenceException) { return null; }
     });
