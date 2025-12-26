@@ -38,7 +38,6 @@ public abstract class BaseTest
     {
         _driver?.Quit();
         _driver?.Dispose();
-        DriverManager.SetDriver(null);
     }
 
     IWebDriver CreateChrome()
