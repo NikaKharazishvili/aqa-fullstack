@@ -13,37 +13,37 @@ namespace UiTests.Tests;
 [Parallelizable(ParallelScope.Self)]
 public abstract class BaseTest
 {
-    IWebDriver? _driver;
-    string _browser = ConfigReader.Get<string>("Browser").ToLowerInvariant();
-    bool _headless = ConfigReader.Get<bool>("Headless");
+    IWebDriver? driver;
+    string browser = ConfigReader.Get<string>("Browser").ToLowerInvariant();
+    bool headless = ConfigReader.Get<bool>("Headless");
 
     [OneTimeSetUp]
     public void Setup()
     {
 
-        _driver = _browser switch
+        driver = browser switch
         {
             "chrome" => CreateChrome(),
             "firefox" => CreateFirefox(),
-            _ => throw new NotSupportedException($"Browser {_browser} not supported")
+            _ => throw new NotSupportedException($"Browser {browser} not supported")
         };
 
-        DriverManager.SetDriver(_driver);
-        if (!_headless) _driver.Manage().Window.Maximize();
-        _driver.Navigate().GoToUrl(ConfigReader.Get<string>("Url"));
+        DriverManager.SetDriver(driver);
+        if (!headless) driver.Manage().Window.Maximize();
+        driver.Navigate().GoToUrl(ConfigReader.Get<string>("Url"));
     }
 
     [OneTimeTearDown]  // Quit driver after all tests are done
     public void TearDown()
     {
-        _driver?.Quit();
-        _driver?.Dispose();
+        driver?.Quit();
+        driver?.Dispose();
     }
 
     IWebDriver CreateChrome()
     {
         var options = new ChromeOptions();
-        if (_headless)
+        if (headless)
         {
             options.AddArgument("--headless=new");
             options.AddArgument("--window-size=1920,1080");
@@ -54,7 +54,7 @@ public abstract class BaseTest
     IWebDriver CreateFirefox()
     {
         var options = new FirefoxOptions();
-        if (_headless)
+        if (headless)
         {
             options.AddArgument("--headless");
             options.AddArgument("--width=1920");
