@@ -6,8 +6,8 @@ namespace UiTests.Pages;
 public class TablesPage : BasePage
 {
     IWebElement TablesLink => Find("a[href*='tables/']");
-    List<IWebElement> Items => Driver.FindElements(By.CssSelector(".wp-block-table table tbody tr td:first-child")).ToList();
-    List<IWebElement> Prices => Driver.FindElements(By.CssSelector(".wp-block-table table tbody tr td:last-child")).ToList();
+    List<IWebElement> Items => FindMany(".wp-block-table table tbody tr td:first-child");
+    List<IWebElement> Prices => FindMany(".wp-block-table table tbody tr td:last-child");
 
     public void GoToTablesPage() => HoverAndClick(TablesLink);
 
