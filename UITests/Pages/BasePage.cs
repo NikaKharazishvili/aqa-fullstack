@@ -42,6 +42,6 @@ public class BasePage
     public string GetHeaderText() => Find("h1[itemprop='headline']").Text; // Check header of the current page to verify we are on the right page
 
     public void WaitForTextToBe(IWebElement element, string text) => Wait.Until(_ => element.Text.Contains(text));
-    public void WaitForElementVisible(IWebElement element) => Wait.Until(_ => element.Displayed);
+
     public void WaitForElementNotVisible(IWebElement element) => Wait.Until(_ => !element.Displayed);
 }

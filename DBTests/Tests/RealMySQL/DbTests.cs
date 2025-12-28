@@ -17,7 +17,7 @@ namespace DbTests.Tests.RealMySQL;
 [Parallelizable(ParallelScope.Fixtures)]
 public class DbTests
 {
-    MySqlConnection _connection = null!;
+    MySqlConnection connection = null!;
 
     [OneTimeSetUp]
     public void Setup()
@@ -25,66 +25,55 @@ public class DbTests
         // NEW: Load embedded config
         string json = LoadEmbeddedText("Resources/appsettings.mysql.json");
 
-        var config = new ConfigurationBuilder()
-            .AddJsonStream(new MemoryStream(Encoding.UTF8.GetBytes(json)))
-            .Build();
+        var config = new ConfigurationBuilder().AddJsonStream(new MemoryStream(Encoding.UTF8.GetBytes(json))).Build();
 
-        _connection = new MySqlConnection(config.GetConnectionString("DefaultConnection"));
+        connection = new MySqlConnection(config.GetConnectionString("DefaultConnection"));
         try
         {
-            _connection.Open();
-            TestContext.Progress.WriteLine("Database connection established successfully");
-            Console.WriteLine("Database connection established successfully");
+            connection.Open();
+            Assert.Pass("Database connection established successfully");
         }
         catch (Exception ex) { Assert.Fail($"Database connection failed: {ex.Message}"); }
     }
 
-    [OneTimeTearDown]
-    public void TearDown() => _connection?.Close();
+    [OneTimeTearDown] public void TearDown() => connection?.Close();
 
+    // Helper to execute query and run assertions on the reader
     void ExecuteQueryAndAssert(string query, Action<MySqlDataReader> assertAction)
     {
-        using var cmd = new MySqlCommand(query, _connection);
+        using var cmd = new MySqlCommand(query, connection);
         using var reader = cmd.ExecuteReader();
         assertAction(reader);
     }
 
-    [Test]
-    public void TestRecordCount() => ExecuteQueryAndAssert(
-        "SELECT COUNT(*) FROM accounts",
-        reader =>
-        {
-            Assert.That(reader.Read(), Is.True, "ResultSet should have at least one row");
-            Assert.That(reader.GetInt32(0), Is.EqualTo(25), "Expected exactly 25 accounts");
-        });
+    [Test, Description("Check that the accounts table contains exactly 25 rows")]
+    public void TestRecordCount() => ExecuteQueryAndAssert("SELECT COUNT(*) FROM accounts", reader =>
+    {
+        Assert.That(reader.Read(), Is.True, "ResultSet should have at least one row");
+        Assert.That(reader.GetInt32(0), Is.EqualTo(25), "Expected exactly 25 accounts");
+    });
 
-    [Test]
-    public void TestNoDuplicateUsernames() => ExecuteQueryAndAssert(
-        "SELECT username, COUNT(*) c FROM accounts GROUP BY username HAVING c > 1",
-        reader => Assert.That(reader.HasRows, Is.False, "There should be no duplicate usernames"));
+    [Test, Description("Verify that there are no duplicate usernames in accounts table")]
+    public void TestNoDuplicateUsernames() => ExecuteQueryAndAssert("SELECT username, COUNT(*) c FROM accounts GROUP BY username HAVING c > 1", reader =>
+    Assert.That(reader.HasRows, Is.False, "There should be no duplicate usernames"));
 
-    [Test]
-    public void TestNoDuplicateEmails() => ExecuteQueryAndAssert(
-        "SELECT email, COUNT(*) c FROM accounts GROUP BY email HAVING c > 1",
-        reader => Assert.That(reader.HasRows, Is.False, "There should be no duplicate emails"));
+    [Test, Description("Verify that there are no duplicate emails in accounts table")]
+    public void TestNoDuplicateEmails() => ExecuteQueryAndAssert("SELECT email, COUNT(*) c FROM accounts GROUP BY email HAVING c > 1", reader =>
+    Assert.That(reader.HasRows, Is.False, "There should be no duplicate emails"));
 
-    [Test]
-    public void TestNonNullConstraints() => ExecuteQueryAndAssert(
-        "SELECT COUNT(*) FROM accounts WHERE username IS NULL OR password IS NULL OR email IS NULL",
-        reader =>
-        {
-            Assert.That(reader.Read(), Is.True);
-            Assert.That(reader.GetInt32(0), Is.EqualTo(0), "No columns should have NULL values");
-        });
+    [Test, Description("Check that username, password, and email columns do not contain NULL values")]
+    public void TestNonNullConstraints() => ExecuteQueryAndAssert("SELECT COUNT(*) FROM accounts WHERE username IS NULL OR password IS NULL OR email IS NULL", reader =>
+    {
+        Assert.That(reader.Read(), Is.True);
+        Assert.That(reader.GetInt32(0), Is.EqualTo(0), "No columns should have NULL values");
+    });
 
-    [Test]
-    public void TestSpecificUserData() => ExecuteQueryAndAssert(
-        "SELECT username, password, email FROM accounts WHERE username = 'ShadowFang'",
-        reader =>
-        {
-            Assert.That(reader.Read(), Is.True, "ShadowFang should exist");
-            Assert.That(reader["username"], Is.EqualTo("ShadowFang"));
-            Assert.That(reader["password"], Is.EqualTo("DragonSlayer"));
-            Assert.That(reader["email"], Is.EqualTo("shadowfang@mail.com"));
-        });
+    [Test, Description("Verify that the user ShadowFang has the correct username, password, and email")]
+    public void TestSpecificUserData() => ExecuteQueryAndAssert("SELECT username, password, email FROM accounts WHERE username = 'ShadowFang'", reader =>
+    {
+        Assert.That(reader.Read(), Is.True, "ShadowFang should exist");
+        Assert.That(reader["username"], Is.EqualTo("ShadowFang"));
+        Assert.That(reader["password"], Is.EqualTo("DragonSlayer"));
+        Assert.That(reader["email"], Is.EqualTo("shadowfang@mail.com"));
+    });
 }

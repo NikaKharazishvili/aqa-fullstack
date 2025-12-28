@@ -1,1 +1,1 @@
-[assembly: LevelOfParallelism(5)]  // Max browsers at once
+[assembly: LevelOfParallelism(5)] // Max browsers at once

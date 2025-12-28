@@ -40,6 +40,5 @@ public abstract class BaseTest
         driver.Navigate().GoToUrl(ConfigReader.Get<string>("Url"));
     }
 
-    [OneTimeTearDown] // Quit driver after all tests are done
-    public void TearDown() => driver?.Dispose();
+    [OneTimeTearDown] public void TearDown() => driver?.Dispose(); // Quit driver after all tests are done
 }

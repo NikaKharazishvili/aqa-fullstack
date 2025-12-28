@@ -41,7 +41,6 @@ public class ModalsPage : BasePage
         FormModalNameInput.SendKeys("name");
         FormModalEmailInput.SendKeys("email");
         FormModalMessageInput.SendKeys("text");
-        WaitForElementVisible(FormModalSubmitButton);
         FormModalSubmitButton.Click();
     }
 }
