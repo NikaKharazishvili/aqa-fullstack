@@ -23,7 +23,7 @@ public class ModalsPage : BasePage
     {
         SimpleModal.Click();
         WaitForTextToBe(SimpleModalText, "Simple Modal");
-        string text = SimpleModalText.Text;
+        string text = SimpleModalText.Text; // Remember text before closing modal, so we will be able to return it
         SimpleModalCloseButton.Click();
         return text;
     }

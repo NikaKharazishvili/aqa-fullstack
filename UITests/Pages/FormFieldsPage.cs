@@ -25,9 +25,9 @@ public class FormFieldsPage : BasePage
         PasswordInput.SendKeys(password);
 
         // Select favourite drink by value
-        var selectedFavDrink = FavouriteDrinks.FirstOrDefault(d => d.GetAttribute("value") == favDrink);
+        var selectedFavDrink = FavouriteDrinks.FirstOrDefault(d => d.GetDomProperty("value") == favDrink);
         if (selectedFavDrink == null) throw new Exception($"Drink not found: {favDrink}");
-        selectedFavDrink.Click(); ;
+        selectedFavDrink.Click();
 
         // Select favourite color by index (0-4)
         if (favColorIndex < 0 || favColorIndex >= FavouriteColors.Count) throw new ArgumentOutOfRangeException(nameof(favColorIndex), "Invalid color index");

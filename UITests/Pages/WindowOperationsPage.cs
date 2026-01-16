@@ -15,7 +15,7 @@ public class WindowOperationsPage : BasePage
     IWebElement NewWindow => Find(".custom_btn[onclick='newWindow()']");
 
     // Required for Firefox compatibility: Firefox opens to about:blank before loading target URL
-    bool _isFirefox = ConfigReader.Get<string>("Browser").ToLowerInvariant() == "firefox";
+    bool isFirefox = ConfigReader.Get<string>("Browser").ToLowerInvariant() == "firefox";
 
     public void GoToWindowOperationsPage() => HoverAndClick(WindowOperationsLink);
 
@@ -25,7 +25,7 @@ public class WindowOperationsPage : BasePage
         NewTab.Click();
         var windows = Driver.WindowHandles.ToList();
         Driver.SwitchTo().Window(windows[1]);
-        if (_isFirefox) Wait.Until(driver => !driver.Url.Equals("about:blank", StringComparison.OrdinalIgnoreCase));
+        if (isFirefox) Wait.Until(driver => !driver.Url.Equals("about:blank", StringComparison.OrdinalIgnoreCase));
         string currentUrl = Driver.Url;
         Driver.Close();
         Driver.SwitchTo().Window(windows[0]);
@@ -36,7 +36,7 @@ public class WindowOperationsPage : BasePage
     public string ReplaceWindowAndGetUrl()
     {
         ReplaceWindow.Click();
-        if (_isFirefox) Wait.Until(driver => !driver.Url.Equals("about:blank", StringComparison.OrdinalIgnoreCase));
+        if (isFirefox) Wait.Until(driver => !driver.Url.Equals("about:blank", StringComparison.OrdinalIgnoreCase));
         string currentUrl = Driver.Url;
         Driver.Navigate().Back();
         return currentUrl;
@@ -62,7 +62,7 @@ public class WindowOperationsPage : BasePage
             }
         }
 
-        if (_isFirefox) Wait.Until(driver => !driver.Url.Equals("about:blank", StringComparison.OrdinalIgnoreCase));
+        if (isFirefox) Wait.Until(driver => !driver.Url.Equals("about:blank", StringComparison.OrdinalIgnoreCase));
         string currentUrl = Driver.Url;
         Driver.Close();
         Driver.SwitchTo().Window(originalWindow);

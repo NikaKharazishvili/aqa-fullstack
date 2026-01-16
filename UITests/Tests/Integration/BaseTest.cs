@@ -13,6 +13,8 @@ namespace UiTests.Tests;
 [Parallelizable(ParallelScope.Self)]
 public abstract class BaseTest
 {
+    // This local driver instance ensures proper teardown per test fixture
+    // DriverManager is still used for page objects, but relying solely on it was causing the last fixture teardown issue
     IWebDriver? driver;
 
     [OneTimeSetUp]
@@ -40,5 +42,6 @@ public abstract class BaseTest
         driver.Navigate().GoToUrl(ConfigReader.Get<string>("Url"));
     }
 
-    [OneTimeTearDown] public void TearDown() => driver?.Dispose(); // Quit driver after all tests are done
+    // Quit driver after all tests are done
+    [OneTimeTearDown] public void TearDown() => driver?.Dispose();
 }

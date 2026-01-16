@@ -13,9 +13,6 @@ public static class Utils
     public const string UNIT = "Unit";
     public const string SMOKE = "Smoke";
 
-    // Pause for 'seconds'
-    public static void Wait(float seconds) => Thread.Sleep((int)(seconds * 1000));
-
     // Loads an embedded resource file as a string. Used by tests to load config files, SQL scripts, or JSON test data
     public static string LoadEmbeddedText(string resourcePath)
     {
